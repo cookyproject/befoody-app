@@ -1,0 +1,11 @@
+<ion-view>
+  <ion-header-bar class="bar-positive item-input-inset">
+    <label class="item-positive item-input-wrapper">
+      <i class="icon ion-ios-search placeholder-icon"></i>
+      <input type="search" placeholder="Search">
+    </label>
+  </ion-header-bar>
+  <ion-content overflow-scroll="true">
+    <ion-refresher on-refresh="loadPosts()" pulling-text="Pull to refresh..."></ion-refresher>
+  </ion-content>
+</ion-view>

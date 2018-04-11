@@ -1,0 +1,73 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+$light : #fff !default;
+$stable : #efefef !default;
+$positive : #e6726c !default;
+$calm : #11c1f3 !default;
+$balanced : #33cd5f !default;
+$energized : #ffc900 !default;
+$assertive : #ef473a !default;
+$royal : #886aea !default;
+$dark : #444 !default;
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+@import "www/lib/ionic-social-buttons/ionic-social-buttons.scss";
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid $positive;
+  margin: 1em 0;
+  padding: 0;
+}
+
+.text-center-x {
+  text-align: center;
+}
+
+.text-center-y {
+  vertical-align: center;
+}
+
+.text-right-x {
+  text-align: right;
+}
+
+.content-narrow-x {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+img.circle-sm {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.back-stable {
+  background-color: $stable;
+}
+
+textarea {
+  width: 100%;
+  height: 20vw;
+  resize: vertical;
+  
+}

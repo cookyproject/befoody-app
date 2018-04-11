@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
+
+  <link rel="manifest" href="manifest.json">
+
+  <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+  <link href="css/ionic.app.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+  <!-- Google Place API-->
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ8Jwbt9q0Ym17DA4UVOFjOmQQi0b4aJE&libraries=places"></script>
+  <!-- ionic/angularjs js -->
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+
+  <script src="lib/firebase/firebase.js"></script>
+  <script src="lib/angularfire/dist/angularfire.min.js"></script>
+  <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+  <script src="lib/angular-elastic/elastic.js"></script>
+  <script src="lib/angular-guid/guid.js"></script>
+
+
+
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyABlSPlYxLFHvkLiroasrwBYqWRQa3H8ZM",
+      authDomain: "befoody-4e0a3.firebaseapp.com",
+      databaseURL: "https://befoody-4e0a3.firebaseio.com",
+      projectId: "befoody-4e0a3",
+      storageBucket: "befoody-4e0a3.appspot.com",
+      messagingSenderId: "520776530433"
+    };
+    firebase.initializeApp(config);
+  </script>
+
+  <!-- your app's js -->
+  <script src="js/app.js"></script>
+  <script src="js/directive/google-place-auto-complete.js"></script>
+  <script src="js/service/media.js"></script>
+  <script src="js/login.js"></script>
+  <script src="js/create-user.js"></script>
+  <script src="js/main-tabs.js"></script>
+  <script src="js/post-list.js"></script>
+  <script src="js/place-list.js"></script>
+  <script src="js/create-post.js"></script>
+  <script src="js/coupon-list.js"></script>
+  <script src="js/user-profile.js"></script>
+</head>
+
+<body ng-app="starter">
+  <ion-nav-view name="main-nav-view">
+  </ion-nav-view>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<ion-view>
+  <ion-header-bar align-title="center" class="bar bar-header bar-positive">
+    <h1 class="title white-text">BeFoody</h1>
+  </ion-header-bar>
+  <ion-content class="content-narrow-x">
+    <div class="row">
+      <div class="col">
+        <br/>
+        <br/>
+        <br/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-center-x">
+        <h3 class="positive">Sign in</h3>
+      </div>
+
+    </div>
+    <div class="list list-inset" style="margin-top:0px;">
+
+      <label class="item item-input">
+        <input type="text" placeholder="E-mail">
+      </label>
+      <label class="item item-input">
+        <input type="password" placeholder="Password">
+      </label>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="button button-block button-positive" ng-click="login()">
+          Sign in
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-66">
+        <button class="button button-clear button-dark" ng-click="forgetPasswd()">
+          Forget password？
+        </button>
+      </div>
+      <div class="col col-33" style="text-align:right;">
+        <button class="button button-clear button-dark" ng-click="register()">
+          Sign up
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <hr/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="button button-block social-button-facebook" ng-click="loginFacebook()">
+          Login Facebook
+        </button>
+        <button class="button button-block social-button-google" ng-click="loginGoogle()">
+          Login Google
+        </button>
+
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

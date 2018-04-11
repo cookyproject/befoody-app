@@ -1,0 +1,16 @@
+<ion-modal-view>
+  <ion-header-bar align-title="center" class="bar bar-header bar-positive">
+    <h1 class="title white-text">Restaurant Search</h1>
+    <div class="buttons">
+      <button class="button" ng-click="closeGooglePlaceAutoPicker()">Cancel</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" ng-model="place" google-place-auto-complete>
+      </label>
+    </div>
+  </ion-content>
+</ion-modal-view>

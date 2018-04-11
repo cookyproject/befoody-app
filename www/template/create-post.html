@@ -1,0 +1,68 @@
+<ion-view>
+  <ion-header-bar align-title="center" class="bar bar-header bar-positive">
+    <h1 class="title white-text">Create Post</h1>
+
+  </ion-header-bar>
+  <ion-content class="has-header">
+    <div class="row padding">
+      <div class="col col-50">
+        <div class="" style="float: left;">
+          <img class="circle-sm" ng-src="{{me.auth.photoURL}}">
+        </div>
+        <div class="padding-horizontal text-center-y" style="float: left; ">
+          <h4>{{me.user.name}}</h4>
+        </div>
+      </div>
+
+
+      <div class="col col-50 text-right-x ">
+        <button class="button" ng-click="openGooglePlaceAutoPicker()">
+          <i class="icon ion-location"></i> {{place ? place.name : '選擇位置'}}
+        </button>
+      </div>
+    </div>
+    <div class="row padding">
+      <div class="col back-stable text-center-x" style="height: 15rem;" ng-if="!photoUrl">
+        <a class="button button-icon icon ion-plus-circled text-center-y" ng-click="addMediaFromCamera()"></a>
+      </div>
+      <div class="col back-stable text-center-x" style="height: 15rem;" ng-if="photoUrl">
+        <img style="height: 100%; width: 100%;" src="{{photoUrl}}" />
+      </div>
+
+
+    </div>
+    <div class="row padding">
+      <div class="col">
+        <textarea msd-elastic ng-model="content" placeholder="請新增說明文字"></textarea>
+      </div>
+    </div>
+    <div class="list card">
+
+      <div class="item item-icon-left" ng-repeat="item in items track by $index">
+        <a class="button button-icon icon" ng-class="{'ion-plus-circled': !canDeleteItem($index), 'ion-minus-circled': canDeleteItem($index)}"
+          ng-disabled="!canDeleteItem($index)" ng-click="deleteItem($index)"></a>
+
+        </a>
+        <div class="row">
+          <div class="col col-80">
+            <input type="text" placeholder="新增料理" ng-change="onItemChanged($index)" ng-model="item.name">
+          </div>
+          <div class="col col-20">
+            <input type="number" placeholder="價格" ng-change="onItemChanged($index)" ng-model="item.price">
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="button button-block button-positive" ng-click="submit()">
+          發布
+        </button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
