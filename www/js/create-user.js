@@ -5,7 +5,7 @@ app.controller('CreateUserCtrl', function ($scope, $rootScope, $state, $http, $i
       name: '',
       description: ''
     };
-
+    
 
     $scope.submit = function () {
       var userId = $state.params.userId;

@@ -12,6 +12,7 @@
     "cordova": "^8.0.0",
     "cordova-android": "~6.4.0",
     "cordova-ios": "~4.5.4",
+    "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-camera": "^4.0.2",
     "cordova-plugin-device": "^2.0.1",
     "cordova-plugin-facebook": "^0.2.2",
@@ -41,7 +42,8 @@
       "cordova-plugin-facebook": {
         "FACEBOOK_DISPLAY_NAME": "BeFoody",
         "FACEBOOK_APP_ID": "192369464828582"
-      }
+      },
+      "cordova-plugin-actionsheet": {}
     },
     "platforms": [
       "ios",

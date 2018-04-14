@@ -5,7 +5,7 @@
   </ion-header-bar>
   <ion-content class="has-header">
     <div class="row padding">
-      <div class="col col-50">
+      <div class="col col-40">
         <div class="" style="float: left;">
           <img class="circle-sm" ng-src="{{me.auth.photoURL}}">
         </div>
@@ -15,15 +15,25 @@
       </div>
 
 
-      <div class="col col-50 text-right-x ">
-        <button class="button" ng-click="openGooglePlaceAutoPicker()">
+      <div class="col col-60 text-right-x ">
+        <button class="button" ng-click="editPlace()" ng-if="!isEditingPlace">
           <i class="icon ion-location"></i> {{place ? place.name : '選擇位置'}}
         </button>
+        <label class="item item-input" ng-if="isEditingPlace">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input id="pac-input" data-tap-disabled="true" ng-change="disableTap()" type="text" placeholder="Search"
+            ng-model="placeKeyword" google-place-auto-complete>
+        </label>
+
       </div>
     </div>
+
+
+
+
     <div class="row padding">
       <div class="col back-stable text-center-x" style="height: 15rem;" ng-if="!photoUrl">
-        <a class="button button-icon icon ion-plus-circled text-center-y" ng-click="addMediaFromCamera()"></a>
+        <a class="button button-icon icon ion-plus-circled text-center-y" ng-click="addMedia()"></a>
       </div>
       <div class="col back-stable text-center-x" style="height: 15rem;" ng-if="photoUrl">
         <img style="height: 100%; width: 100%;" src="{{photoUrl}}" />

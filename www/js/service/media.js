@@ -1,4 +1,4 @@
-app.factory('mediaService', ['$window', '$http', '$q', '$rootScope','$cordovaFile','Guid', function ($window, $http, $q, $rootScope, $cordovaFile, Guid) {
+app.factory('mediaService', ['$window', '$http', '$q', '$rootScope', '$cordovaFile', 'Guid', function ($window, $http, $q, $rootScope, $cordovaFile, Guid) {
 
   var mediaService = {};
   mediaService.postVideo = function (medium) {
@@ -10,7 +10,7 @@ app.factory('mediaService', ['$window', '$http', '$q', '$rootScope','$cordovaFil
 
       options.destinationType = Camera.DestinationType.FILE_URI;
       navigator.camera.getPicture(function (imageURI) {
-        
+
         console.log(imageURI);
         var dirPath = imageURI.substring(0, imageURI.lastIndexOf('/') + 1);
         var fileName = imageURI.substring(imageURI.lastIndexOf('/') + 1, imageURI.length);
@@ -40,13 +40,13 @@ app.factory('mediaService', ['$window', '$http', '$q', '$rootScope','$cordovaFil
 
       imagePicker.getPictures(function (results) {
         var hasError = false;
-        var media = [];
+        var snapshots = [];
 
-        var uploadSuccess = function (result) {
+        var uploadSuccess = function (snapshot) {
 
-          media.push(JSON.parse(result.response));
-          if (media.length == results.length) {
-            resolve(media);
+          snapshots.push(snapshot);
+          if (snapshots.length == results.length) {
+            resolve(snapshots);
           }
         };
         var uploadError = function (err) {
@@ -70,15 +70,20 @@ app.factory('mediaService', ['$window', '$http', '$q', '$rootScope','$cordovaFil
 
         for (var i = 0; i < results.length; i++) {
 
-          var fileName = results[i].replace(/^.*[\\\/]/, '');
-          var ft = new FileTransfer();
-          var uploadOptions = new FileUploadOptions();
-          uploadOptions.fileKey = 'photo';
-          uploadOptions.fileName = fileName;
-          uploadOptions.headers = {
-            Authorization: $rootScope.authToken
-          };
-          ft.upload(results[i], AppSettings.baseApiUrl + 'media/photos?direction=portrait', uploadSuccess, uploadError, uploadOptions, true);
+          var imageURI = results[i];
+          console.log(imageURI);
+          var dirPath = imageURI.substring(0, imageURI.lastIndexOf('/') + 1);
+          var fileName = imageURI.substring(imageURI.lastIndexOf('/') + 1, imageURI.length);
+          var fileKey = Guid.newGuid();
+
+          $cordovaFile.readAsArrayBuffer(dirPath, fileName)
+            .then(function (success) {
+              var blob = new Blob([success], {
+                type: 'image/jpeg'
+              });
+              var storageRef = firebase.storage().ref();
+              var uploadTask = storageRef.child(fileKey).put(blob).then(uploadSuccess);
+            }, uploadError);
         }
       }, function (err) {
         reject(err);

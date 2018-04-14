@@ -1,15 +1,27 @@
-app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, $firebaseObject, $firebaseAuth, me, Guid, $ionicModal, mediaService, $ionicLoading) {
+app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, $firebaseObject, $firebaseAuth, me, Guid, $ionicModal, mediaService, $ionicLoading, $cordovaActionSheet) {
 
 
   $scope.me = me;
+  $scope.isEditingPlace = false;
   $scope.content = '';
   $scope.items = [{
     name: ''
   }];
+  $scope.placeKeyword = null;
   $scope.place = null;
   $scope.placePickerModal = null;
   $scope.photoUrl = null;
 
+  $scope.disableTap = function () {
+    var container = document.getElementsByClassName('pac-container');
+    angular.element(container).attr('data-tap-disabled', 'true');
+    var backdrop = document.getElementsByClassName('backdrop');
+    angular.element(backdrop).attr('data-tap-disabled', 'true');
+    angular.element(container).on("click", function () {
+      document.getElementById('pac-input').blur();
+    });
+
+  };
 
   $scope.onItemChanged = function (index) {
     if ($scope.items[index].name.length == 0 && index < $scope.items.length) {
@@ -29,11 +41,26 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
   };
 
 
-  $scope.openGooglePlaceAutoPicker = function () {
-    $scope.placePickerModal.show();
-  };
-  $scope.closeGooglePlaceAutoPicker = function () {
-    $scope.placePickerModal.hide();
+  
+  $scope.editPlace = function () {
+    $scope.placeKeyword = $scope.place ? $scope.place.name : '';
+    $scope.isEditingPlace = true;
+  }
+
+  $scope.addMedia = function () {
+    var options = {
+      title: '新增相片',
+      buttonLabels: ['透過相機拍照', '選取相片'],
+      addCancelButtonWithLabel: '取消',
+      androidEnableCancelButton: true
+    };
+    $cordovaActionSheet.show(options).then(function (btnIndex) {
+      if (btnIndex == 1) {
+        $scope.addMediaFromCamera();
+      } else if (btnIndex == 2) {
+        $scope.addMediaDetailFromPicker();
+      }
+    });
   };
 
   $scope.addMediaFromCamera = function () {
@@ -49,13 +76,13 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
     };
 
     $ionicLoading.show({
-      template: '上傳中...'
+      template: '請稍候...'
     });
     mediaService.postCameraImage(camOptions).then(function (result) {
       console.log(result);
       $scope.photoUrl = result.downloadURL;
 
-    }, function (err)  {
+    }, function (err) {
       console.error(err);
     }).finally(function () {
       $ionicLoading.hide();
@@ -66,29 +93,21 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
   $scope.addMediaDetailFromPicker = function () {
 
     var options = {
-      maximumImagesCount: 10,
+      maximumImagesCount: 1,
       width: 0,
       height: 0,
       quality: 50
     };
     $ionicLoading.show({
-      template: '上傳中...'
+      template: '請稍候...'
     });
-    $apiMedia.postPickedImages(options).then(function (result) {
+    mediaService.postPickedImages(options).then(function (result) {
       console.log(result);
-      for (var i = 0; i < result.length; i++) {
-        $scope.post.postDetailList.push({
-          media: result[i]
-        });
-
-      }
-      $ionicScrollDelegate.scrollBottom();
+      $scope.photoUrl = result[0].downloadURL;
+      
 
     }, function (err) {
-      $ionicPopup.alert({
-        title: '無法上傳',
-        template: '上傳的照片容量過大'
-      });
+      
       console.error(err);
 
     }).finally(function () {
@@ -123,9 +142,9 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
       photoUrl: $scope.photoUrl,
       placeId: $scope.place.place_id,
       content: $scope.content,
-      items: $scope.items.slice(0,$scope.items.length-1).reduce(function (acc, item, idx) {
-         acc[idx] = item
-         return acc;
+      items: $scope.items.slice(0, $scope.items.length - 1).reduce(function (acc, item, idx) {
+        acc[idx] = item
+        return acc;
       }, {}),
       createdTime: firebase.database.ServerValue.TIMESTAMP,
     };
@@ -140,28 +159,15 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
   }
 
 
-  $scope.$on('$destroy', function () {
-    $scope.placePickerModal.remove();
-  });
-  $scope.$on('modal.hidden', function (event, modal) {
-    if (modal === $scope.placePickerModal) {
-
-    }
-  });
+  
   $scope.$on('googlePlaceAutoComplete.placeChanged', function (event, place) {
-    $scope.placePickerModal.hide();
+    
     $scope.place = place;
+    $scope.isEditingPlace = false;
   });
 
   $scope.init = function () {
 
-
-    $ionicModal.fromTemplateUrl('template/place-auto-complete-picker.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function (modal) {
-      $scope.placePickerModal = modal;
-    });
   };
   $scope.init();
 

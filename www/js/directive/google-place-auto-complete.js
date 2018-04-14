@@ -1,18 +1,19 @@
 app.directive('googlePlaceAutoComplete', function () {
   return {
-    require: 'ngModel',
-    link: function (scope, element, attrs, model) {
+    require: '',
+    link: function (scope, element, attrs) {
       var options = {
         types: ['establishment']
       };
-      scope.googlePlaceAutoComplete = new google.maps.places.Autocomplete(element[0], options);
+      var pacInput = element[0];
+      var googlePlaceAutoComplete = new google.maps.places.Autocomplete(pacInput, options);
 
-      scope.googlePlaceAutoComplete.addListener('place_changed', function () {
-        var place = scope.googlePlaceAutoComplete.getPlace();
+      google.maps.event.addListener(googlePlaceAutoComplete, 'place_changed', function () {
+        var place = googlePlaceAutoComplete.getPlace();
         scope.$apply(function () {
-            model.$setViewValue(place);
-            scope.$emit('googlePlaceAutoComplete.placeChanged',place);
+          scope.$emit('googlePlaceAutoComplete.placeChanged', place);
         });
+        
       });
     }
   };

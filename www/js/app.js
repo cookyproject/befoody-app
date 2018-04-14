@@ -3,10 +3,11 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 'ngGuid','ngCordova'])
+var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 'ngGuid', 'ngCordova','ion-google-place'])
   .run(function ($ionicPlatform, $rootScope, $firebaseAuth, $state) {
+    
     $ionicPlatform.ready(function () {
-      console.log(cordova);
+
       if (window.cordova && window.cordova.InAppBrowser) {
         window.open = cordova.InAppBrowser.open;
       }
@@ -20,7 +21,7 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
         // a much nicer keyboard experience.
         cordova.plugins.Keyboard.disableScroll(true);
       }
-      
+
       if (window.StatusBar) {
         StatusBar.styleDefault();
       }
