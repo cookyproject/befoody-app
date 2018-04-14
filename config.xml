@@ -3,7 +3,7 @@
     <name>ionic-firebase-starter</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="debbie.cc.chen@gmail.com" href="http://ionicframework.com/">Debbie Chen</author>
-    <content original-src="index.html" src="http://192.168.100.5:8100" />
+    <content original-src="index.html" src="http://192.168.43.193:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -94,6 +94,7 @@
         <variable name="FACEBOOK_APP_ID" value="192369464828582" />
     </plugin>
     <allow-navigation href="http://192.168.100.5:8100" />
+    <allow-navigation href="http://192.168.43.193:8100" />
     <engine name="ios" spec="~4.5.4" />
-    <engine name="android" spec="~6.4.0" />
+    <engine name="android" spec="6.4.0" />
 </widget>
