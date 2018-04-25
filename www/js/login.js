@@ -69,6 +69,10 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
 
   };
 
+  $scope.loginGoogle = function(){
+
+  };
+
   $scope.init = function () {
 
 

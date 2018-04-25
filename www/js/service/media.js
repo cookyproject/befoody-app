@@ -74,13 +74,14 @@ app.factory('mediaService', ['$window', '$http', '$q', '$rootScope', '$cordovaFi
           console.log(imageURI);
           var dirPath = imageURI.substring(0, imageURI.lastIndexOf('/') + 1);
           var fileName = imageURI.substring(imageURI.lastIndexOf('/') + 1, imageURI.length);
-          var fileKey = Guid.newGuid();
+          
 
           $cordovaFile.readAsArrayBuffer(dirPath, fileName)
             .then(function (success) {
               var blob = new Blob([success], {
                 type: 'image/jpeg'
               });
+              var fileKey = Guid.newGuid();
               var storageRef = firebase.storage().ref();
               var uploadTask = storageRef.child(fileKey).put(blob).then(uploadSuccess);
             }, uploadError);

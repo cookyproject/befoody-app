@@ -145,6 +145,17 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
         }
 
       })
+      .state('main-tabs.preview-post', {
+        url: '/preview-post',
+        params: { post: null },
+        views: {
+          'tab-create-post': {
+            templateUrl: 'template/preview-post.html',
+            controller: 'PreviewPostCtrl'
+          }
+        }
+
+      })
       .state('main-tabs.coupon-list', {
         url: '/coupon-list',
         views: {

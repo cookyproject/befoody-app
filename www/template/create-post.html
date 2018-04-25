@@ -21,8 +21,8 @@
         </button>
         <label class="item item-input" ng-if="isEditingPlace">
           <i class="icon ion-search placeholder-icon"></i>
-          <input id="pac-input" data-tap-disabled="true" ng-change="disableTap()" type="text" placeholder="Search"
-            ng-model="placeKeyword" google-place-auto-complete>
+          <input id="pac-input" data-tap-disabled="true" ng-change="disableTap()" type="text" placeholder="Search" ng-model="placeKeyword"
+            google-place-auto-complete>
         </label>
 
       </div>
@@ -32,20 +32,30 @@
 
 
     <div class="row padding">
-      <div class="col back-stable text-center-x" style="height: 15rem;" ng-if="!photoUrl">
-        <a class="button button-icon icon ion-plus-circled text-center-y" ng-click="addMedia()"></a>
-      </div>
-      <div class="col back-stable text-center-x" style="height: 15rem;" ng-if="photoUrl">
-        <img style="height: 100%; width: 100%;" src="{{photoUrl}}" />
-      </div>
+      <ion-slides options="photoSlideOptions" slider="data.slider" style="height: 20rem;">
+        <ion-slide-page ng-repeat="slide in photoSlides track by $index">
+          <div class="back-stable text-center-x" ng-click="addMedia()" ng-if="!slide.url" style="display: flex;align-items:center;height:100%;justify-content: center;">
+            <a class="button button-icon icon ion-plus-circled text-center-y"></a>
+          </div>
+          <div class="back-stable text-center-x" ng-if="slide.url" back-img="{{slide.url}}" style="height: 15rem;background-size: contain;background-repeat: no-repeat;background-position: center; background-color: black;" ng-click="openPhotoSlideModal($index)">
+            
+          </div>
+          <div class="row padding" ng-if="slide.url" style="height: 5rem;">
+            <div class="col">
+              <textarea msd-elastic ng-model="slide.description" placeholder="請新增說明文字"></textarea>
+            </div>
+          </div>
+        </ion-slide-page>
+      </ion-slides>
+
 
 
     </div>
-    <div class="row padding">
+    <!-- <div class="row padding">
       <div class="col">
         <textarea msd-elastic ng-model="content" placeholder="請新增說明文字"></textarea>
       </div>
-    </div>
+    </div> -->
     <div class="list card">
 
       <div class="item item-icon-left" ng-repeat="item in items track by $index">
@@ -70,7 +80,7 @@
     <div class="row">
       <div class="col">
         <button class="button button-block button-positive" ng-click="submit()">
-          發布
+          預覽
         </button>
       </div>
     </div>

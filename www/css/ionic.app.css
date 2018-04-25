@@ -14498,3 +14498,17 @@ textarea {
   width: 100%;
   height: 20vw;
   resize: vertical; }
+
+.photo-detail {
+  position: absolute;
+  bottom: 0px;
+  color: #ffffff;
+  width: 100%;
+  height: 40px;
+  vertical-align: bottom;
+  font-size: 10pt;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: rgba(0, 0, 0, 0.3); }

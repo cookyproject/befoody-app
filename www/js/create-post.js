@@ -1,6 +1,7 @@
 app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, $firebaseObject, $firebaseAuth, me, Guid, $ionicModal, mediaService, $ionicLoading, $cordovaActionSheet) {
 
 
+  $scope.photoSlideModal = null;
   $scope.me = me;
   $scope.isEditingPlace = false;
   $scope.content = '';
@@ -11,6 +12,17 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
   $scope.place = null;
   $scope.placePickerModal = null;
   $scope.photoUrl = null;
+
+  $scope.photoSlideOptions = {
+    loop: false,
+    effect: 'slide',
+    speed: 500,
+  }
+
+  $scope.photoSlides = [{
+    url: null,
+    description: null
+  }]
 
   $scope.disableTap = function () {
     var container = document.getElementsByClassName('pac-container');
@@ -41,7 +53,7 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
   };
 
 
-  
+
   $scope.editPlace = function () {
     $scope.placeKeyword = $scope.place ? $scope.place.name : '';
     $scope.isEditingPlace = true;
@@ -80,7 +92,13 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
     });
     mediaService.postCameraImage(camOptions).then(function (result) {
       console.log(result);
-      $scope.photoUrl = result.downloadURL;
+
+
+      $scope.photoSlides.splice($scope.photoSlides.length - 1, 0, {
+        url: result.downloadURL,
+        description: ''
+      });
+
 
     }, function (err) {
       console.error(err);
@@ -90,10 +108,11 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
 
 
   };
+
   $scope.addMediaDetailFromPicker = function () {
 
     var options = {
-      maximumImagesCount: 1,
+      maximumImagesCount: 20,
       width: 0,
       height: 0,
       quality: 50
@@ -103,11 +122,19 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
     });
     mediaService.postPickedImages(options).then(function (result) {
       console.log(result);
-      $scope.photoUrl = result[0].downloadURL;
-      
+
+      result.forEach(function (r) {
+        $scope.photoSlides.splice($scope.photoSlides.length - 1, 0, {
+          url: r.downloadURL,
+          description: ''
+        });
+      });
+
+
+      console.log($scope.photoSlides);
 
     }, function (err) {
-      
+
       console.error(err);
 
     }).finally(function () {
@@ -127,10 +154,10 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
       return;
     }
 
-    if (!$scope.photoUrl) {
+    if ($scope.photoSlides.length <= 1) {
       $ionicPopup.alert({
         title: '資料錯誤',
-        template: '尚未上傳照片'
+        template: '尚未上傳任何照片'
 
       });
       return;
@@ -139,34 +166,64 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
     var post = {
       authorUid: me.auth.uid,
       placeName: $scope.place.name,
-      photoUrl: $scope.photoUrl,
+      photos: $scope.photoSlides.slice(0, $scope.photoSlides.length - 1),
       placeId: $scope.place.place_id,
       content: $scope.content,
-      items: $scope.items.slice(0, $scope.items.length - 1).reduce(function (acc, item, idx) {
-        acc[idx] = item
-        return acc;
-      }, {}),
+      items: $scope.items.slice(0, $scope.items.length - 1),
       createdTime: firebase.database.ServerValue.TIMESTAMP,
     };
     console.log(JSON.stringify(post));
-
-    firebase.database().ref('posts/' + Guid.newGuid()).set(post).then(function (result) {
-      alert('success');
-      $state.go('main-tabs.post-list');
-    }, function (err) {
-      console.error(err);
+    
+    $state.go('main-tabs.preview-post', {
+      post: post
     });
+    
   }
 
-
-  
-  $scope.$on('googlePlaceAutoComplete.placeChanged', function (event, place) {
+  $scope.openPhotoSlideModal = function (idx) {
+    $scope.photoSlideModal.show();
     
+    $scope.modalSlider.slideTo(idx);
+  }
+  $scope.closePhotoSlideModal = function() {
+    $scope.photoSlideModal.hide();
+  }
+
+  $scope.deleteCurrentPhoto = function() {
+    var currIdx = $scope.modalSlider.activeIndex;
+    $scope.photoSlides.splice(currIdx,1);
+    $scope.photoSlideModal.hide();
+
+ }
+
+
+  $scope.$on('googlePlaceAutoComplete.placeChanged', function (event, place) {
+
     $scope.place = place;
     $scope.isEditingPlace = false;
   });
 
+  $scope.$on("$ionicSlides.sliderInitialized", function (event, data) {
+    // data.slider is the instance of Swiper
+    if($(data.slider.wrapper).parent().parent().hasClass('modalSlider')){
+      $scope.modalSlider = data.slider;
+    }
+    else{
+      $scope.slider = data.slider;
+    }
+    
+    
+    
+  });
+
   $scope.init = function () {
+    $ionicModal.fromTemplateUrl('template/edit-photo-slide-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.photoSlideModal = modal;
+      
+    });
 
   };
   $scope.init();

@@ -3,11 +3,46 @@
     <h1 class="title white-text">BeFoody</h1>
   </ion-header-bar>
   <ion-content>
-    <div class="row">
-      <div class="col">
+    <ion-list>
+      <ion-item ng-repeat="post in posts">
+        <div class="row padding">
+          <div class="col col-40">
+            <div class="" style="float: left;">
+              <img class="circle-sm" ng-src="{{post.author.avatar}}">
+            </div>
+            <div class="padding-horizontal text-center-y" style="float: left; ">
+              <h4>{{author.name}}</h4>
+            </div>
+          </div>
 
-      </div>
-    </div>
 
+          <div class="col col-60 text-right-x">
+            <button class="button button-clear button-positive">
+              <i class="icon ion-location"></i> {{post.placeName}}
+            </button>
+          </div>
+        </div>
+
+
+
+
+        <div class="row padding" style="height: 15rem;">
+          <ion-slides options="photoSlideOptions" slider="data.photoSlideModalSlider">
+            <ion-slide-page ng-repeat="photo in post.photos | filter : {url: '!!'} track by $index ">
+              <div back-img="{{photo.url}}" style="height: 100%;background-size: contain;background-repeat: no-repeat;background-position: center; background-color: black;">
+                <div class="photo-detail" ng-if="photo.description">
+                  {{photo.description}}
+                </div>
+              </div>
+            </ion-slide-page>
+          </ion-slides>
+        </div>
+        <div class="row padding" ng-repeat="item in post.items track by $index">
+          <div class="col">
+            {{item.name}} ${{item.price}}
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>
