@@ -1,0 +1,20 @@
+<ion-modal-view>
+  <ion-header-bar class="bar bar-header bar-positive">
+    <div class="buttons">
+      <button class="button button-icon icon ion-ios-arrow-back" ng-click="closePhotoSlideModal()"></button>
+    </div>
+    <h1 class="title white-text" >照片</h1>
+   
+  </ion-header-bar>
+  <ion-content>
+    <ion-slides options="photoSlideOptions" slider="data.photoSlideModalSlider" >
+      <ion-slide-page ng-repeat="photo in post.photo | filter : {url: '!!'} track by $index ">
+        <div back-img="{{photo.url}}" style="height: 100%;background-size: contain;background-repeat: no-repeat;background-position: center; background-color: black;">
+            <div class="photo-detail" ng-if="photo.description">
+                {{photo.description}}
+            </div>
+        </div>
+      </ion-slide-page>
+    </ion-slides>
+  </ion-content>
+</ion-modal-view>
