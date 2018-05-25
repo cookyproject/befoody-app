@@ -1,0 +1,56 @@
+<ion-view>
+  <ion-header-bar align-title="center" class="bar bar-header bar-positive">
+    <div class="buttons">
+      <button class="button button-icon icon ion-ios-arrow-back" ng-click="goBackward()"></button>
+    </div>
+    <h1 class="title white-text">預覽</h1>
+
+  </ion-header-bar>
+  <ion-content class="has-header">
+    <div class="row padding">
+      <div class="col col-40">
+        <div class="" style="float: left;">
+          <img class="circle-sm" ng-src="{{me.auth.photoURL}}">
+        </div>
+        <div class="padding-horizontal text-center-y" style="float: left; ">
+          <h4>{{me.user.name}}</h4>
+        </div>
+      </div>
+
+
+      <div class="col col-60 text-right-x">
+        <button class="button button-clear button-positive">
+          <i class="icon ion-location"></i> {{post.placeName}}
+        </button>
+      </div>
+    </div>
+
+
+
+
+    <div class="row padding" style="height: 15rem;">
+      <ion-slides options="photoSlideOptions" slider="data.photoSlideModalSlider">
+        <ion-slide-page ng-repeat="photo in post.photos | filter : {url: '!!'} track by $index ">
+          <div back-img="{{photo.url}}" style="height: 100%;background-size: contain;background-repeat: no-repeat;background-position: center; background-color: black;">
+            <div class="photo-detail" ng-if="photo.description">
+              {{photo.description}}
+            </div>
+          </div>
+        </ion-slide-page>
+      </ion-slides>
+    </div>
+    <div class="row padding" ng-repeat="item in post.items track by $index">
+      <div class="col">
+        {{item.name}} ${{item.price}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <button class="button button-block button-positive" ng-click="submit()">
+          發布
+        </button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
