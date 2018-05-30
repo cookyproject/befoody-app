@@ -3,7 +3,8 @@ app.controller('CreateUserCtrl', function ($scope, $rootScope, $state, $http, $i
     
     $scope.profile = {
       name: '',
-      description: ''
+      description: '',
+      avatar: $state.params.avatar
     };
     
 

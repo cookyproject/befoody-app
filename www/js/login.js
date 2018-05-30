@@ -19,12 +19,19 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
             firebase.database().ref('/users/' + uid).once('value').then(function (snapshot) {
               if (snapshot.val()) {
                 // already has profile
-                $state.go('main-tabs.post-list');
+                var profile = snapshot.val();
+                profile.avatar = firebaseUser.photoURL;
+                firebase.database().ref('users/' + uid).set(profile).then(function (result) {
+                  $state.go('main-tabs.post-list');
+                }, function (err) {
+                  console.error(err);
+                });
 
               } else {
                 // no profile
                 $state.go('create-user', {
-                  userId: uid
+                  userId: uid,
+                  avatar: firebaseUser.photoURL
                 });
               }
 
@@ -50,12 +57,19 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
         firebase.database().ref('/users/' + uid).once('value').then(function (snapshot) {
           if (snapshot.val()) {
             // already has profile
-            $state.go('main-tabs.post-list');
+            var profile = snapshot.val();
+            profile.avatar = firebaseUser.photoURL;
+            firebase.database().ref('users/' + uid).set(profile).then(function (result) {
+              $state.go('main-tabs.post-list');
+            }, function (err) {
+              console.error(err);
+            });
 
           } else {
             // no profile
             $state.go('create-user', {
-              userId: uid
+              userId: uid,
+              avatar: firebaseUser.photoURL
             });
           }
 
@@ -69,7 +83,7 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
 
   };
 
-  $scope.loginGoogle = function(){
+  $scope.loginGoogle = function () {
 
   };
 

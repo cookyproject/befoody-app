@@ -7,8 +7,8 @@
    
   </ion-header-bar>
   <ion-content>
-    <ion-slides options="photoSlideOptions" slider="data.photoSlideModalSlider" >
-      <ion-slide-page ng-repeat="photo in post.photo | filter : {url: '!!'} track by $index ">
+    <ion-slides options="photoSlideOptions" slider="data.photoSlideModalSlider" class="modalSlider">
+      <ion-slide-page ng-repeat="photo in post.photos | filter : {url: '!!'} track by $index ">
         <div back-img="{{photo.url}}" style="height: 100%;background-size: contain;background-repeat: no-repeat;background-position: center; background-color: black;">
             <div class="photo-detail" ng-if="photo.description">
                 {{photo.description}}

@@ -102,7 +102,8 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
           }
         },
         params: {
-          userId: null
+          userId: null,
+          avatar: null
         }
       })
       .state('main-tabs', {

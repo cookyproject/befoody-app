@@ -30,7 +30,7 @@ app.controller('PreviewPostCtrl', function ($scope, $rootScope, $state, $http, $
       };
       console.log(JSON.stringify(post));
   
-      firebase.database().ref('posts/' + Guid.newGuid()).set(post).then(function (result) {
+      firebase.database().ref('posts').push(post).then(function (result) {
        
         $state.go('main-tabs.post-list');
       }, function (err) {
