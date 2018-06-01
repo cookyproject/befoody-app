@@ -1,0 +1,28 @@
+<ion-view>
+  <ion-header-bar align-title="center" class="bar bar-header bar-positive">
+    <h1 class="title white-text">Sign Up</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Email</span>
+        <input type="text" placeholder="輸入Email" ng-model="user.email">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">密碼</span>
+        <input type="password" placeholder="輸入密碼" ng-model="user.password">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">確認密碼</span>
+        <input type="password" placeholder="再次輸入密碼" ng-model="user.confirmPassword">
+      </label>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="button button-block button-positive" ng-click="submit()">
+          Submit
+        </button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

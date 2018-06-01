@@ -93,6 +93,15 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
           }
         }
       })
+      .state('register', {
+        url: '/register',
+        views: {
+          'main-nav-view': {
+            templateUrl: 'template/register.html',
+            controller: 'RegisterCtrl'
+          }
+        }
+      })
       .state('create-user', {
         url: '/create-user',
         views: {
