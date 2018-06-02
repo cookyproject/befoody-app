@@ -3,7 +3,7 @@
     <name>ionic-firebase-starter</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="debbie.cc.chen@gmail.com" href="http://ionicframework.com/">Debbie Chen</author>
-    <content original-src="index.html" src="http://192.168.43.213:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

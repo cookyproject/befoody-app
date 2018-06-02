@@ -1,0 +1,48 @@
+<ion-view>
+  <ion-header-bar class="bar-positive item-input-inset">
+    <div class="buttons">
+      <button class="button button-icon icon ion-chevron-left" ng-click="goBack()"></button>
+    </div>
+    <h1 class="title white-text">尋找好友</h1>
+  </ion-header-bar>
+  <ion-content overflow-scroll="true">
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" ng-change="searchChanged()" ng-model="form.searchKeyword">
+      </label>
+    </div>
+    <ion-list>
+      <ion-item collection-repeat="user in users">
+        <div class="row padding">
+          <div class="col col-40">
+            <div class="" style="float: left;">
+              <img class="circle-sm" ng-src="{{user.avatar}}">
+            </div>
+            <div class="padding-horizontal text-center-y" style="float: left; ">
+              <h4>{{user.name}}</h4>
+            </div>
+          </div>
+
+
+          <div class="col col-60 text-right-x">
+            <button class="button" ng-class="{'button-positve': !user.isFriend, 'button-stable': user.isFriend}" ng-click="addFriend(user)">
+              <i class="icon ion-plus-round"></i> {{user.isFriend ? '已是好友' : '加為好友'}}
+            </button>
+          </div>
+        </div>
+        <div class="row padding" style="height: 15rem;">
+          <div class="col" back-img="{{user.lastestPost ? user.latestPost.photos[0].url : ''}}"  style="width:100%;height: 100%;background-size: contain;background-repeat: no-repeat;background-position: center; background-color: black;">
+            <div class="row" style="height:100%">
+              <div class="col col-bottom" style="background-color: rgba(0, 0, 0, 0.3); color: white;" ng-if="post.photos[0].description">
+                {{user.description}}
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

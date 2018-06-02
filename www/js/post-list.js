@@ -149,6 +149,10 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
         
     };
 
+    $scope.searchUser = function(){
+        $state.go('search-user');
+    };
+
 
     $scope.init = function () {
         $ionicModal.fromTemplateUrl('template/photo-slide-modal.html', {

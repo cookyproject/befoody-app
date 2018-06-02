@@ -115,6 +115,21 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
           avatar: null
         }
       })
+      .state('search-user', {
+        url: '/search-user',
+        views: {
+          'main-nav-view': {
+            templateUrl: 'template/search-user.html',
+            controller: 'SearchUserCtrl'
+          }
+        },
+        params: {
+          uid: null,
+        },
+        resolve: {
+          me: requireLogin
+        }
+      })
       .state('main-tabs', {
         url: '/main-tabs',
         abstract: true,
