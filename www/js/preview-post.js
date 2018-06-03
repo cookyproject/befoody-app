@@ -31,8 +31,6 @@ app.controller('PreviewPostCtrl', function ($scope, $rootScope, $state, $http, $
     console.log(JSON.stringify(post));
 
     firebase.database().ref('posts').push(post).then(function (result) {
-      
-      
       $state.go('main-tabs.post-list');
     }, function (err) {
       console.error(err);

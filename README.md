@@ -53,4 +53,52 @@ BeFoody App
 3. 如果想透過Debugger及時偵錯, 在電腦端 Chrome 輸入網址:  `chrome://inspect`
 4. 想停止預覽: 命令提示字元/終端機按下 `ctrl+c`
 
+# JavaScript 抓取 Firebase  資料範例
+
+* 假設某用戶的編號是`USER_ID`, 則以下方式可以抓到其正在追蹤的用戶:
+  * `ref`放的是資料路徑
+  * `once('value')` 指的是監聽抓取資料的事件
+  * 事件一但抓取成功，`then(...)` 裡面的function就會被觸發，而 `allFriendSnap` 就是抓回的資料
+```javascript
+firebase.database().ref('users/' + USER_ID + '/friends').once('value').then(function (allFriendSnap) {
+
+  // allFriendSnap 變數就是被追蹤用戶的集合
+
+});
+```
+* 假設某用戶的編號是`USER_ID`, 則以下方式可以抓到其寫過的文章:
+```javascript
+firebase.database().ref("posts").orderByChild('authorUid').equalTo(USER_ID).once("value").then(function(postsSnap){
+
+  // postsSnap 變數就是文章集合
+  
+});
+```
+
+* 新增一篇文章，假設作者編號是 `USER_ID`:
+
+```javascript
+var post = {
+  authorUid: USER_ID,
+  placeName: '餐廳名稱',
+  photos: {
+    0: '第1張照片URL',
+    1: '第2張照片URL',
+  },
+  placeId: '餐廳的 Google 位置代號',
+  items: {
+    0: {
+      name: '第 1 道菜名',
+      price: 100,
+    },
+    1: {
+      name: '第 2 道菜名',
+      price: 200,
+    },
+  }
+};
+firebase.database().ref('posts').push(post).then(function (result) {
+  // 處理儲存成功後的事情... ex. 返回文章列表
+});
+```
 
