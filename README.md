@@ -62,7 +62,7 @@ BeFoody App
 ```javascript
 firebase.database().ref('users/' + USER_ID + '/friends').once('value').then(function (allFriendSnap) {
 
-  // allFriendSnap 變數就是被追蹤用戶的集合
+  // allFriendSnap 變數就是被追蹤用戶的集合
 
 });
 ```
@@ -71,7 +71,7 @@ firebase.database().ref('users/' + USER_ID + '/friends').once('value').then(func
 firebase.database().ref("posts").orderByChild('authorUid').equalTo(USER_ID).once("value").then(function(postsSnap){
 
   // postsSnap 變數就是文章集合
-  
+
 });
 ```
 
@@ -82,8 +82,14 @@ var post = {
   authorUid: USER_ID,
   placeName: '餐廳名稱',
   photos: {
-    0: '第1張照片URL',
-    1: '第2張照片URL',
+    0: { 
+      url: '第1張照片URL',
+      description: '第1張照片描述'
+    },
+    1: { 
+      url: '第 2 張照片URL',
+      description: '第 2 張照片描述'
+    }
   },
   placeId: '餐廳的 Google 位置代號',
   items: {
