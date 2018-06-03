@@ -149,6 +149,9 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
             templateUrl: 'template/post-list.html',
             controller: 'PostListCtrl'
           }
+        },
+        resolve: {
+          me: requireLogin
         }
       })
       .state('main-tabs.place-list', {
@@ -162,6 +165,7 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
       })
       .state('main-tabs.create-post', {
         url: '/create-post',
+        params: { shouldReset: false },
         views: {
           'tab-create-post': {
             templateUrl: 'template/create-post.html',

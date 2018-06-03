@@ -12,7 +12,7 @@
         <div class="row padding">
           <div class="col col-40">
             <div class="" style="float: left;">
-              <img class="circle-sm" ng-src="{{post.author.avatar}}">
+              <img class="circle-sm" ng-src="{{post.author.avatar ? post.author.avatar : 'img/avatar.png'}}">
             </div>
             <div class="padding-horizontal text-center-y" style="float: left; ">
               <h4>{{post.author.name}}</h4>
@@ -45,6 +45,6 @@
         </div>
       </ion-item>
     </ion-list>
-    <ion-infinite-scroll ng-if="hasMorePosts" on-infinite="loadNextPage()" distance="5px"></ion-infinite-scroll>
+    <!-- <ion-infinite-scroll ng-if="hasMorePosts" on-infinite="loadNextPage()" distance="5px"></ion-infinite-scroll> -->
   </ion-content>
 </ion-view>

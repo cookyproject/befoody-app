@@ -7,6 +7,10 @@ app.controller('RegisterCtrl', function ($scope, $rootScope, $state, $http, $ion
     confirmPassword: '',
   };
 
+  $scope.goBack = function () {
+    $ionicHistory.goBack();
+  };
+
 
   $scope.submit = function () {
 

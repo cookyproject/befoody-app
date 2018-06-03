@@ -17,7 +17,7 @@
         <div class="row padding">
           <div class="col col-40">
             <div class="" style="float: left;">
-              <img class="circle-sm" ng-src="{{user.avatar}}">
+              <img class="circle-sm" ng-src="{{user.avatar ? user.avatar : 'img/avatar.png'}}">
             </div>
             <div class="padding-horizontal text-center-y" style="float: left; ">
               <h4>{{user.name}}</h4>
@@ -26,15 +26,15 @@
 
 
           <div class="col col-60 text-right-x">
-            <button class="button" ng-class="{'button-positve': !user.isFriend, 'button-stable': user.isFriend}" ng-click="addFriend(user)">
-              <i class="icon ion-plus-round"></i> {{user.isFriend ? '已是好友' : '加為好友'}}
+            <button class="button" ng-class="{'button-positive': !user.isFriend, 'button-stable': user.isFriend}" ng-click="addFriend(user)">
+              <i class="icon" ng-class="user.isFriend ? 'ion-ios7-checkmark' : 'ion-plus-round'" ></i> {{user.isFriend ? '已追蹤' : '追蹤'}}
             </button>
           </div>
         </div>
         <div class="row padding" style="height: 15rem;">
-          <div class="col" back-img="{{user.lastestPost ? user.latestPost.photos[0].url : ''}}"  style="width:100%;height: 100%;background-size: contain;background-repeat: no-repeat;background-position: center; background-color: black;">
+          <div class="col" back-img="{{user.lastestPost ? user.latestPost.photos[0].url : 'img/photo-placeholder.jpg'}}"  style="width:100%;height: 100%;background-size: contain;background-repeat: no-repeat;background-position: center; background-color: black;">
             <div class="row" style="height:100%">
-              <div class="col col-bottom" style="background-color: rgba(0, 0, 0, 0.3); color: white;" ng-if="post.photos[0].description">
+              <div class="col col-bottom" style="background-color: rgba(0, 0, 0, 0.3); color: white;" ng-if="user.description">
                 {{user.description}}
               </div>
             </div>
