@@ -40,7 +40,7 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
     $scope.hasMorePosts = false;
 
     firebase.database().ref('users/' + me.auth.uid + '/friends').once('value').then(function (allFriendSnap) {
-      var friendKeys = [];
+      var friendKeys = [me.auth.uid];
       allFriendSnap.forEach(function (friendSnap) {
         friendKeys.push(friendSnap.key);
       });
@@ -63,11 +63,11 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
             $scope.lastLoadedPostCreatedTime = post.createdTime;
             $scope.lastLoadedPostKey = postSnap.key;
             var duration = moment.duration(moment().diff(moment(post.createdTime)));
-            if (duration.asDays() > 0) {
+            if (duration.asDays() > 1) {
               post.createdSince = Math.round(duration.asDays()) + ' days';
-            } else if (duration.asHours() > 0) {
+            } else if (duration.asHours() > 1) {
               post.createdSince = Math.round(duration.asHours()) + ' hrs';
-            } else if (duration.asMinutes() > 0) {
+            } else if (duration.asMinutes() > 1) {
               post.createdSince = Math.round(duration.asMinutes()) + ' mins';
             } else {
               post.createdSince = 'just now';

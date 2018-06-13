@@ -38,7 +38,7 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
 
     $firebaseAuth().$onAuthStateChanged(function (firebaseUser) {
       if (firebaseUser) {
-        console.log("Signed in as:", firebaseUser.uid);
+        console.log("Signed in as:", firebaseUser);
       } else {
         console.log("Signed out");
         $state.go('login');
@@ -165,7 +165,7 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
       })
       .state('main-tabs.create-post', {
         url: '/create-post',
-        params: { shouldReset: false },
+        params: { submitted: false },
         views: {
           'tab-create-post': {
             templateUrl: 'template/create-post.html',

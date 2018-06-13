@@ -93,12 +93,16 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
   };
 
   $scope.navigateByFirebaseUser = function (firebaseUser) {
+    $ionicLoading.show({
+      template: '請稍候...'
+    });
     firebase.database().ref('/users/' + firebaseUser.uid).once('value').then(function (snapshot) {
       if (snapshot.val()) {
         // already has profile
         var profile = snapshot.val();
         profile.avatar = firebaseUser.photoURL;
         firebase.database().ref('users/' + firebaseUser.uid).set(profile).then(function (result) {
+          $ionicLoading.hide();
           $state.go('main-tabs.post-list');
         }, function (err) {
           console.error(err);
@@ -106,6 +110,7 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
 
       } else {
         // no profile
+        $ionicLoading.hide();
         $state.go('create-user', {
           userId: firebaseUser.uid,
           avatar: firebaseUser.photoURL
@@ -146,6 +151,9 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
   };
   $scope.init = function () {
 
+    if(currentAuth){
+      $scope.navigateByFirebaseUser(currentAuth);
+    }
 
   };
   $scope.init();

@@ -8,7 +8,7 @@
   <ion-content>
     <ion-refresher on-refresh="reloadPosts()"></ion-refresher>
     <ion-list>
-      <ion-item collection-repeat="post in posts">
+      <ion-item collection-repeat="post in posts | orderBy:'-createdTime'">
         <div class="row padding">
           <div class="col col-40">
             <div class="" style="float: left;">

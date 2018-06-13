@@ -1,4 +1,4 @@
-app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, $firebaseObject, $firebaseAuth, me, Guid, $ionicModal, mediaService, $ionicLoading, $cordovaActionSheet) {
+app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, $firebaseObject, $firebaseAuth, me, Guid, $ionicModal, mediaService, $ionicLoading, $cordovaActionSheet, $stateParams) {
 
 
   $scope.photoSlideModal = null;
@@ -173,28 +173,28 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
       createdTime: firebase.database.ServerValue.TIMESTAMP,
     };
     console.log(JSON.stringify(post));
-    
+
     $state.go('main-tabs.preview-post', {
       post: post
     });
-    
+
   }
 
   $scope.openPhotoSlideModal = function (idx) {
     $scope.photoSlideModal.show();
-    
+
     $scope.modalSlider.slideTo(idx);
   }
-  $scope.closePhotoSlideModal = function() {
+  $scope.closePhotoSlideModal = function () {
     $scope.photoSlideModal.hide();
   }
 
-  $scope.deleteCurrentPhoto = function() {
+  $scope.deleteCurrentPhoto = function () {
     var currIdx = $scope.modalSlider.activeIndex;
-    $scope.photoSlides.splice(currIdx,1);
+    $scope.photoSlides.splice(currIdx, 1);
     $scope.photoSlideModal.hide();
 
- }
+  }
 
 
   $scope.$on('googlePlaceAutoComplete.placeChanged', function (event, place) {
@@ -205,25 +205,43 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
 
   $scope.$on("$ionicSlides.sliderInitialized", function (event, data) {
     // data.slider is the instance of Swiper
-    if($(data.slider.wrapper).parent().parent().hasClass('modalSlider')){
+    if ($(data.slider.wrapper).parent().parent().hasClass('modalSlider')) {
       $scope.modalSlider = data.slider;
-    }
-    else{
+    } else {
       $scope.slider = data.slider;
     }
-    
-    
-    
+
+
+
+  });
+  $scope.$on('$ionicView.enter', function () {
+    console.log($stateParams.submitted);
   });
 
   $scope.init = function () {
+    if ($stateParams.submitted) {
+      $scope.items = [{
+        name: ''
+      }];
+      $scope.photoSlides = [{
+        url: null,
+        description: null
+      }];
+      $scope.placeKeyword = null;
+      $scope.place = null;
+
+      $state.go('main-tabs.post-list');
+
+    }
     $ionicModal.fromTemplateUrl('template/edit-photo-slide-modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function (modal) {
       $scope.photoSlideModal = modal;
-      
+
     });
+
+
 
   };
   $scope.init();
