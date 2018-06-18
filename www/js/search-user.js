@@ -43,17 +43,18 @@ app.controller('SearchUserCtrl', function ($scope, $rootScope, $state, $http, $i
       if (userSnap.key == me.auth.uid) {
         return;
       }
-      user.isFriend = false;
+      user.isFollowing = false;
       user.uid = userSnap.key;
       added.push(user);
 
 
-      firebase.database().ref('users/' + me.auth.uid + '/friends/' + userSnap.key).once('value').then(function (friendSnap) {
-        if (friendSnap.exists()) {
-          user.isFriend = true;
+      firebase.database().ref('users/' + me.auth.uid + '/following/' + userSnap.key).once('value').then(function (followingSanp) {
+        if (followingSanp.exists()) {
+          user.isFollowing = true;
         }
 
       });
+
 
 
     });
@@ -64,15 +65,20 @@ app.controller('SearchUserCtrl', function ($scope, $rootScope, $state, $http, $i
     });
 
   };
-  $scope.addFriend = function (user) {
+  $scope.addFollower = function (user) {
     var obj = {
       placeholder: true
     }
-    firebase.database().ref('users/' + me.auth.uid + '/friends/' + user.uid).set(obj).then(function (result) {
+    firebase.database().ref('users/' + me.auth.uid + '/following/' + user.uid).set(obj).then(function (result) {
       $scope.$apply(function () {
-        user.isFriend = true;
+        user.isFollowing = true;
       });
 
+    }, function (err) {
+      console.error(err);
+    });
+    firebase.database().ref('followers/' + user.uid + '/' + me.auth.uid).set(obj).then(function (result) {
+      console.log(result);
     }, function (err) {
       console.error(err);
     });

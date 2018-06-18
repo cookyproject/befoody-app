@@ -201,6 +201,9 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
             templateUrl: 'template/user-profile.html',
             controller: 'UserProfileCtrl'
           }
+        },
+        resolve: {
+          me: requireLogin
         }
       });
 

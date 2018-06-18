@@ -26,8 +26,8 @@
 
 
           <div class="col col-60 text-right-x">
-            <button class="button" ng-class="{'button-positive': !user.isFriend, 'button-stable': user.isFriend}" ng-click="addFriend(user)">
-              <i class="icon" ng-class="user.isFriend ? 'ion-ios7-checkmark' : 'ion-plus-round'" ></i> {{user.isFriend ? '已追蹤' : '追蹤'}}
+            <button class="button" ng-class="{'button-positive': !user.isFollowing, 'button-stable': user.isFollowing}" ng-click="addFollower(user)">
+              <i class="icon" ng-class="user.isFollowing ? 'ion-ios7-checkmark' : 'ion-plus-round'" ></i> {{user.isFollowing ? '已追蹤' : '追蹤'}}
             </button>
           </div>
         </div>

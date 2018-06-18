@@ -61,6 +61,12 @@ img.circle-sm {
   height: 50px;
 }
 
+img.circle-lg {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
 .back-stable {
   background-color: $stable;
 }

@@ -39,15 +39,15 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
     $scope.loadedPostKeys = {};
     $scope.hasMorePosts = false;
 
-    firebase.database().ref('users/' + me.auth.uid + '/friends').once('value').then(function (allFriendSnap) {
-      var friendKeys = [me.auth.uid];
-      allFriendSnap.forEach(function (friendSnap) {
-        friendKeys.push(friendSnap.key);
+    firebase.database().ref('users/' + me.auth.uid + '/following').once('value').then(function (allFollowingSnap) {
+      var followingKeys = [me.auth.uid];
+      allFollowingSnap.forEach(function (followingSanp) {
+        followingKeys.push(followingSanp.key);
       });
-      console.log(friendKeys);
+      console.log(followingKeys);
 
-      var promises = friendKeys.map(function (friendKey) {
-        return firebase.database().ref("posts").orderByChild('authorUid').equalTo(friendKey).once("value");
+      var promises = followingKeys.map(function (followingKey) {
+        return firebase.database().ref("posts").orderByChild('authorUid').equalTo(followingKey).once("value");
       });
       Promise.all(promises).then(function (friendPostSnapshots) {
         var added = [];
@@ -222,13 +222,13 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
 
     
 
-    firebase.database().ref('users/' + me.auth.uid + '/friends').once('value').then(function (allFriendSnap) {
-        var friendKeys = [];
-        allFriendSnap.forEach(function (friendSnap) {
-          friendKeys.push(friendSnap.key);
+    firebase.database().ref('users/' + me.auth.uid + '/following').once('value').then(function (allFollowingSnap) {
+        var followingKeys = [];
+        allFollowingSnap.forEach(function (followingSanp) {
+          followingKeys.push(followingSanp.key);
         });
-        if(friendKeys.length == 0){
-            console.log('no friend');
+        if(followingKeys.length == 0){
+            console.log('no following');
             $scope.searchUser();
         }
     });
