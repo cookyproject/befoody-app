@@ -1,6 +1,11 @@
 app.factory('mediaService', ['$window', '$http', '$q', '$rootScope', '$cordovaFile', 'Guid', function ($window, $http, $q, $rootScope, $cordovaFile, Guid) {
 
   var mediaService = {};
+
+  mediaService.getUrl = function(key){
+    return 'https://firebasestorage.googleapis.com/v0/b/befoody-4e0a3.appspot.com/o/'+key+'?alt=media';
+  };
+
   mediaService.postVideo = function (medium) {
     return $http.post(AppSettings.baseApiUrl + 'media/video', medium);
   };

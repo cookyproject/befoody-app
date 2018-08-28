@@ -12,6 +12,32 @@ app.controller('PlaceListCtrl', function ($scope, $rootScope, $state, $http, $io
       console.log(result);
       $scope.$apply(function () {
         $scope.places = result.data.results;
+        $scope.places.forEach(function (place) {
+          firebase.database().ref("posts").orderByChild('placeId').equalTo(place.place_id).limitToLast(1).once("value").then(function (placePostSnapshots) {
+            var added = [];
+            placePostSnapshots.forEach(function (placePostSnap) {
+
+              if (!placePostSnap.exists()) {
+                return;
+              }
+              var post = placePostSnap.val();
+              if (post.photos && post.photos.length > 0) {
+                $scope.$apply(function () {
+                  place.imageUrl = post.photos[0].url;
+                });
+              }
+
+
+
+            });
+
+
+
+
+
+
+          });
+        });
       });
 
 

@@ -1,4 +1,4 @@
-app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, $firebaseObject, me, Guid, $ionicModal, mediaService, $ionicLoading, $cordovaActionSheet, $stateParams) {
+app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, me, Guid, $ionicModal, mediaService, $ionicLoading, $cordovaActionSheet, $stateParams) {
 
 
   $scope.photoSlideModal = null;
@@ -95,7 +95,7 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
 
 
       $scope.photoSlides.splice($scope.photoSlides.length - 1, 0, {
-        url: result.downloadURL,
+        url: mediaService.getUrl(result.metadata.fullPath),
         description: ''
       });
 
@@ -124,8 +124,9 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
       console.log(result);
 
       result.forEach(function (r) {
+        
         $scope.photoSlides.splice($scope.photoSlides.length - 1, 0, {
-          url: r.downloadURL,
+          url: mediaService.getUrl(r.metadata.fullPath),
           description: ''
         });
       });

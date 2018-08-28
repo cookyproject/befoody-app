@@ -12,7 +12,7 @@
     <ion-refresher on-refresh="loadPosts()" pulling-text="Pull to refresh..."></ion-refresher>
     <ion-list>
       <ion-item class="item-thumbnail-right" collection-repeat="place in places" ng-click="clickPlace(place)">
-        <img ng-src="">
+        <img ng-src="{{place.imageUrl != null ? place.imageUrl : 'img/photo-placeholder.jpg'}}" style="object-fit: cover;">
         <h2 class="positive">{{place.name}}</h2>
         <p>{{place.formatted_address}}</p>
         <p>{{place.opening_hours && place.opening_hours.open_now ? '營業中' : '尚未到營業時間'}}</p>
