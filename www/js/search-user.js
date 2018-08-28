@@ -1,4 +1,4 @@
-app.controller('SearchUserCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, $firebaseAuth, me) {
+app.controller('SearchUserCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, me) {
 
   $scope.users = [];
   $scope.form = {

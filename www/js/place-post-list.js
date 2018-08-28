@@ -1,5 +1,6 @@
-app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, $ionicModal, me) {
+app.controller('PlacePostListCtrl', function ($scope, $rootScope, $state, $stateParams, $http, $ionicPopup, $ionicHistory, $ionicModal, me) {
 
+  $scope.place = null;
   $scope.posts = [];
   $scope.lastLoadedPostKey = null;
   $scope.lastLoadedPostCreatedTime = null;
@@ -12,7 +13,9 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
     speed: 500,
   }
   $scope.loadedPostKeys = {};
-
+  $scope.goBackward = function () {
+    $ionicHistory.goBack();
+  };
   $scope.openPhotoSlideModal = function (idx) {
     $scope.post = $scope.posts[idx];
     $scope.photoSlideModal.show();
@@ -38,68 +41,46 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
     $scope.post = null;
     $scope.loadedPostKeys = {};
     $scope.hasMorePosts = false;
+    var placeId = $stateParams.place.place_id;
+    firebase.database().ref("posts").orderByChild('placeId').equalTo(placeId).once("value").then(function (placePostSnapshots) {
+      var added = [];
+      placePostSnapshots.forEach(function (placePostSnap) {
 
-    firebase.database().ref('users/' + me.auth.uid + '/following').once('value').then(function (allFollowingSnap) {
-      var followingKeys = [me.auth.uid];
-      allFollowingSnap.forEach(function (followingSanp) {
-        followingKeys.push(followingSanp.key);
-      });
-      console.log(followingKeys);
-
-      var promises = followingKeys.map(function (followingKey) {
-        return firebase.database().ref("posts").orderByChild('authorUid').equalTo(followingKey).once("value");
-      });
-      Promise.all(promises).then(function (friendPostSnapshots) {
-        var added = [];
-        var idx = 0;
-        friendPostSnapshots.forEach(function (friendPostSnap) {
-
-          if (!friendPostSnap.exists()) {
-            return;
-          }
-          friendPostSnap.forEach(function (postSnap) {
-            var post = postSnap.val();
-            $scope.loadedPostKeys[postSnap.key] = true;
-            $scope.lastLoadedPostCreatedTime = post.createdTime;
-            $scope.lastLoadedPostKey = postSnap.key;
-            var duration = moment.duration(moment().diff(moment(post.createdTime)));
-            if (duration.asDays() > 1) {
-              post.createdSince = Math.round(duration.asDays()) + ' days';
-            } else if (duration.asHours() > 1) {
-              post.createdSince = Math.round(duration.asHours()) + ' hrs';
-            } else if (duration.asMinutes() > 1) {
-              post.createdSince = Math.round(duration.asMinutes()) + ' mins';
-            } else {
-              post.createdSince = 'just now';
-            }
-            console.log('init ', postSnap.key, post);
-            added.push(post);
-            firebase.database().ref('users/' + post.authorUid).once('value').then(function (authorSnap) {
-              post.author = authorSnap.val();
-  
-            });
-            if (idx == 0) {
-              $scope.lastLoadedPostCreatedTime = post.createdTime;
-              $scope.lastLoadedPostKey = postSnap.key;
-            }
-            idx++;
-          });
+        if (!placePostSnap.exists()) {
+          return;
+        }
+        var post = placePostSnap.val();
+        var duration = moment.duration(moment().diff(moment(post.createdTime)));
+        if (duration.asDays() > 1) {
+          post.createdSince = Math.round(duration.asDays()) + ' days';
+        } else if (duration.asHours() > 1) {
+          post.createdSince = Math.round(duration.asHours()) + ' hrs';
+        } else if (duration.asMinutes() > 1) {
+          post.createdSince = Math.round(duration.asMinutes()) + ' mins';
+        } else {
+          post.createdSince = 'just now';
+        }
+        
+        added.push(post);
+        firebase.database().ref('users/' + post.authorUid).once('value').then(function (authorSnap) {
+          post.author = authorSnap.val();
 
         });
-
-        added.reverse();
-        added.forEach(function (post) {
-          $scope.posts.push(post);
-        });
-
-        $scope.$broadcast('scroll.refreshComplete');
-        $scope.hasMorePosts = true;
-
-
-
-
+       
 
       });
+      added.reverse();
+      added.forEach(function (post) {
+        $scope.posts.push(post);
+      });
+
+      $scope.$broadcast('scroll.refreshComplete');
+      $scope.hasMorePosts = true;
+
+
+
+
+
     });
 
     // firebase.database().ref('posts').orderByChild('createdTime').limitToLast(5).once('value').then(function (snapshot) {
@@ -206,10 +187,12 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
 
   };
 
-  $scope.searchUser = function () {
-    $state.go('search-user');
-  };
-
+  $scope.$on("$ionicView.enter", function (scopes, states) {
+    if (states.stateName == "main-tabs.place-post-list") {
+      $scope.place = $stateParams.place;
+      $scope.reloadPosts();
+    }
+  });
 
   $scope.init = function () {
     $ionicModal.fromTemplateUrl('template/photo-slide-modal.html', {
@@ -219,20 +202,6 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
       $scope.photoSlideModal = modal;
       $scope.reloadPosts();
     });
-
-    
-
-    firebase.database().ref('users/' + me.auth.uid + '/following').once('value').then(function (allFollowingSnap) {
-        var followingKeys = [];
-        allFollowingSnap.forEach(function (followingSanp) {
-          followingKeys.push(followingSanp.key);
-        });
-        if(followingKeys.length == 0){
-            console.log('no following');
-            $scope.searchUser();
-        }
-    });
-    
 
 
   };

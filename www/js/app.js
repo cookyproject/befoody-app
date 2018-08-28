@@ -3,9 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 'ngGuid', 'ngCordova'])
-  .run(function ($ionicPlatform, $rootScope, $firebaseAuth, $state) {
-    
+var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'ngCordova'])
+  .run(function ($ionicPlatform, $rootScope, $state) {
+
     $ionicPlatform.ready(function () {
 
       if (window.cordova && window.cordova.InAppBrowser) {
@@ -35,8 +35,7 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
         $state.go('create-user');
       }
     });
-
-    $firebaseAuth().$onAuthStateChanged(function (firebaseUser) {
+    firebase.auth().onAuthStateChanged(function (firebaseUser) {
       if (firebaseUser) {
         console.log("Signed in as:", firebaseUser);
       } else {
@@ -46,17 +45,19 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
       }
     });
 
+
   })
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider, $sceDelegateProvider) {
 
 
-    var requireLogin = function ($q, $firebaseAuth) {
+    var requireLogin = function ($q) {
       return $q(function (resolve, reject) {
-        $firebaseAuth().$requireSignIn().then(function (currAuth) {
-          firebase.database().ref('/users/' + currAuth.uid).once('value').then(function (snapshot) {
+        firebase.auth().onAuthStateChanged(function (firebaseUser) {
+          
+          firebase.database().ref('/users/' + firebaseUser.uid).once('value').then(function (snapshot) {
             if (snapshot.val()) {
               resolve({
-                auth: currAuth,
+                auth: firebaseUser,
                 user: snapshot.val()
               });
             } else {
@@ -66,9 +67,8 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
           }, function (err) {
             reject(err);
           });
-        }, function (err) {
-          reject(err);
         });
+        
 
       });
     }
@@ -88,8 +88,8 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
           }
         },
         resolve: {
-          currentAuth: function ($firebaseAuth) {
-            return $firebaseAuth().$waitForSignIn();
+          currentAuth: function () {
+            return firebase.auth().currentUser;
           }
         }
       })
@@ -163,9 +163,24 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
           }
         }
       })
+      .state('main-tabs.place-post-list', {
+        url: '/place-post-list',
+        params: {
+          place: null
+        },
+        views: {
+          'tab-place-list': {
+            templateUrl: 'template/place-post-list.html',
+            controller: 'PlacePostListCtrl'
+          }
+        }
+
+      })
       .state('main-tabs.create-post', {
         url: '/create-post',
-        params: { submitted: false },
+        params: {
+          submitted: false
+        },
         views: {
           'tab-create-post': {
             templateUrl: 'template/create-post.html',
@@ -176,7 +191,9 @@ var app = angular.module('starter', ['ionic', 'firebase', 'monospaced.elastic', 
       })
       .state('main-tabs.preview-post', {
         url: '/preview-post',
-        params: { post: null },
+        params: {
+          post: null
+        },
         views: {
           'tab-create-post': {
             templateUrl: 'template/preview-post.html',

@@ -1,4 +1,4 @@
-app.controller('PreviewPostCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, $firebaseObject, $firebaseAuth, me, Guid, $ionicModal, mediaService, $ionicLoading, $cordovaActionSheet, $stateParams) {
+app.controller('PreviewPostCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, $firebaseObject, me, Guid, $ionicModal, mediaService, $ionicLoading, $cordovaActionSheet, $stateParams) {
 
 
 

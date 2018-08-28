@@ -1,11 +1,11 @@
-app.controller('UserProfileCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, $firebaseAuth, me) {
+app.controller('UserProfileCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, me) {
 
   $scope.me = me;
   $scope.followerCount = 0;
   $scope.followingCount = 0;
   $scope.photos = [];
   $scope.logout = function () {
-    $firebaseAuth().$signOut();
+    firebase.auth().signOut();
   };
   $scope.init = function () {
     console.log(me);
@@ -25,13 +25,15 @@ app.controller('UserProfileCtrl', function ($scope, $rootScope, $state, $http, $
     });
     $scope.photos = [];
     firebase.database().ref("posts").orderByChild('authorUid').equalTo(me.auth.uid).once("value").then(function (allPostSnap) {
+      $scope.$apply(function () {
         allPostSnap.forEach(function (postSnap) {
-            var post = postSnap.val();
-            if(post.photos[0]){
-                $scope.photos.push(post.photos[0]);
-            }
+          var post = postSnap.val();
+          if (post.photos[0]) {
+            $scope.photos.push(post.photos[0]);
+          }
         });
-        
+      });
+
     });
   };
   $scope.init();

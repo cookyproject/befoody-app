@@ -1,4 +1,4 @@
-app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, $firebaseAuth, currentAuth,$ionicLoading) {
+app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, currentAuth, $ionicLoading) {
 
   $scope.loginForm = {
     email: '',
@@ -47,7 +47,7 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
     } else {
       // fallback
 
-      $firebaseAuth().$signInWithPopup("facebook").then(function (firebaseUser) {
+      firebase.auth().signInWithPopup("facebook").then(function (firebaseUser) {
         console.log("Signed in as:", firebaseUser);
         $scope.navigateByFirebaseUser(firebaseUser);
       }).catch(function (error) {
@@ -132,7 +132,7 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
       $scope.navigateByFirebaseUser(firebaseUser);
 
     }).catch(function (error) {
-      
+
       console.error(error);
       $ionicLoading.hide();
       if (error.code == 'auth/wrong-password') {
@@ -141,7 +141,7 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
           template: '密碼錯誤'
         });
       }
-      if(error.code == 'auth/user-not-found'){
+      if (error.code == 'auth/user-not-found') {
         $ionicPopup.alert({
           title: '無法登入',
           template: '用戶不存在'
@@ -151,7 +151,7 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
   };
   $scope.init = function () {
 
-    if(currentAuth){
+    if (currentAuth) {
       $scope.navigateByFirebaseUser(currentAuth);
     }
 

@@ -1,4 +1,4 @@
-app.controller('RegisterCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, $firebaseAuth) {
+app.controller('RegisterCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory) {
 
 
   $scope.user = {

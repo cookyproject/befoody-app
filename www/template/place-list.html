@@ -2,10 +2,24 @@
   <ion-header-bar class="bar-positive item-input-inset">
     <label class="item-positive item-input-wrapper">
       <i class="icon ion-ios-search placeholder-icon"></i>
-      <input type="search" placeholder="Search">
+      <input type="search" placeholder="Search"  ng-model="placeKeyword">
     </label>
+    <button class="button button-clear" ng-click="submitQuery()">
+      搜尋
+    </button>
   </ion-header-bar>
   <ion-content overflow-scroll="true">
     <ion-refresher on-refresh="loadPosts()" pulling-text="Pull to refresh..."></ion-refresher>
+    <ion-list>
+      <ion-item class="item-thumbnail-right" collection-repeat="place in places" ng-click="clickPlace(place)">
+        <img ng-src="">
+        <h2 class="positive">{{place.name}}</h2>
+        <p>{{place.formatted_address}}</p>
+        <p>{{place.opening_hours && place.opening_hours.open_now ? '營業中' : '尚未到營業時間'}}</p>
+      </ion-item>
+  
+      
+  
+    </ion-list>
   </ion-content>
 </ion-view>
