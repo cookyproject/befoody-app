@@ -55,7 +55,8 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
 
 
   $scope.editPlace = function () {
-    $scope.placeKeyword = $scope.place ? $scope.place.name : '';
+    $scope.placeKeyword = '';
+    $scope.place = null;
     $scope.isEditingPlace = true;
   }
 
@@ -200,7 +201,18 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
 
   $scope.$on('googlePlaceAutoComplete.placeChanged', function (event, place) {
 
-    $scope.place = place;
+    console.log(place);
+    if(place.types.indexOf('cafe') != -1){
+      $scope.place = place;
+    }
+    else {
+      $scope.place = null;
+      $ionicPopup.alert({
+        title: '此位置不是咖啡廳',
+        template: '請選擇咖啡廳作為發文位置'
+
+      });
+    }
     $scope.isEditingPlace = false;
   });
 

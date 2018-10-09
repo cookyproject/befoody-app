@@ -84,6 +84,12 @@ app.controller('SearchUserCtrl', function ($scope, $rootScope, $state, $http, $i
     });
   };
   $scope.init = function () {
+    console.log(me);
+    console.log(me.auth.getIdToken().then(function(result){
+      console.log('user IdToken',result);
+    },function(err){
+        console.error(err);
+    }));
     $scope.reload();
   };
   $scope.init();

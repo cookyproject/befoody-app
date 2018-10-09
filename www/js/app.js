@@ -53,7 +53,7 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
     var requireLogin = function ($q) {
       return $q(function (resolve, reject) {
         firebase.auth().onAuthStateChanged(function (firebaseUser) {
-          
+
           firebase.database().ref('/users/' + firebaseUser.uid).once('value').then(function (snapshot) {
             if (snapshot.val()) {
               resolve({
@@ -68,7 +68,7 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
             reject(err);
           });
         });
-        
+
 
       });
     }
@@ -202,13 +202,16 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
         }
 
       })
-      .state('main-tabs.coupon-list', {
-        url: '/coupon-list',
+      .state('main-tabs.reco', {
+        url: '/reco',
         views: {
-          'tab-coupon-list': {
-            templateUrl: 'template/coupon-list.html',
-            controller: 'CouponListCtrl'
+          'tab-reco': {
+            templateUrl: 'template/reco.html',
+            controller: 'RecoCtrl'
           }
+        },
+        resolve: {
+          me: requireLogin
         }
       })
       .state('main-tabs.user-profile', {
@@ -217,6 +220,18 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
           'tab-user-profile': {
             templateUrl: 'template/user-profile.html',
             controller: 'UserProfileCtrl'
+          }
+        },
+        resolve: {
+          me: requireLogin
+        }
+      })
+      .state('auto-reco-list', {
+        url: '/auto-reco-list',
+        views: {
+          'main-nav-view': {
+            templateUrl: 'template/auto-reco-list.html',
+            controller: 'AutoRecoListCtrl'
           }
         },
         resolve: {

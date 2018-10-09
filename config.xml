@@ -3,7 +3,7 @@
     <name>ionic-firebase-starter</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="debbie.cc.chen@gmail.com" href="http://ionicframework.com/">Debbie Chen</author>
-    <content original-src="index.html" src="http://192.168.43.213:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -103,6 +103,8 @@
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.520776530433-jfi3u0hnhnbllfucjoj3q7murklmivup" />
     </plugin>
     <allow-navigation href="http://192.168.100.3:8100" />
+    <allow-navigation href="http://172.20.10.2:8100" />
+    <allow-navigation href="http://192.168.100.4:8100" />
     <engine name="ios" spec="~4.5.4" />
     <engine name="android" spec="6.4.0" />
 </widget>

@@ -1,0 +1,36 @@
+<ion-view>
+  <ion-header-bar align-title="center" class="bar bar-header bar-positive">
+    <h1 class="title white-text">Coupon</h1>
+    <div class="buttons">
+      <button class="button button-icon icon ion-camera" ng-click="gotoCouponCapture()"></button>
+    </div>
+  </ion-header-bar>
+  <ion-content class="has-header" overflow-scroll="true">
+
+    <ion-refresher on-refresh="loadCoupons()" pulling-text="Pull to refresh..."></ion-refresher>
+    <ion-list>
+      <ion-item class="item-thumbnail-right" collection-repeat="coupon in coupons">
+        <img ng-src="{{coupon.photoUrl != null ? coupon.photoUrl : 'img/photo-placeholder.jpg'}}" style="object-fit: cover;">
+        <h2 class="positive">{{coupon.title}}</h2>
+      </ion-item>
+    </ion-list>
+    <!-- <div class="list card">
+      <div class="item item-body" ng-click="gotoAutoRecoList()">
+        <img class="full-image" src="img/photo-placeholder.jpg" style="height: 160px; object-fit: cover;">
+
+        <p>
+          <h2 class="dark">自動推薦</h2>
+        </p>
+      </div>
+      <div class="item item-body" ng-click="gotoCouponCapture()">
+        <img class="full-image" src="img/photo-placeholder.jpg" style="height: 160px; object-fit: cover;">
+
+        <p>
+          <h2 class="dark">領取專屬優惠</h2>
+        </p>
+      </div>
+
+
+    </div> -->
+  </ion-content>
+</ion-view>
