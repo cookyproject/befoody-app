@@ -30,8 +30,10 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
     $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
       console.log(error);
       if (error === 'AUTH_REQUIRED') {
+        // 如果偵測到還沒登入，則切換到登入畫面
         $state.go('login');
       } else if (error === 'USER_NOT_FOUND') {
+        // 如過偵測到還沒進行首次資料輸入，則切換到會員首次資料輸入畫面
         $state.go('create-user');
       }
     });
@@ -39,21 +41,17 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
       if (firebaseUser) {
         console.log("Signed in as:", firebaseUser);
       } else {
+        // 偵測到已經登出
         console.log("Signed out");
         $state.go('login');
 
       }
     });
-
-
   })
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider, $sceDelegateProvider) {
-
-
     var requireLogin = function ($q) {
       return $q(function (resolve, reject) {
         firebase.auth().onAuthStateChanged(function (firebaseUser) {
-
           firebase.database().ref('/users/' + firebaseUser.uid).once('value').then(function (snapshot) {
             if (snapshot.val()) {
               resolve({
@@ -72,8 +70,6 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
 
       });
     }
-
-
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
     // Set up the various states which the app can be in.
@@ -238,15 +234,7 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
           me: requireLogin
         }
       });
-
-
-
     $urlRouterProvider.otherwise('/login');
-
-
-
-
-
 
     //trusted resource
     $sceDelegateProvider.resourceUrlWhitelist([
@@ -259,6 +247,5 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
 
     //ionic configuration
     $ionicConfigProvider.tabs.position('bottom');
-
 
   })

@@ -14,7 +14,6 @@
         </div>
       </div>
 
-
       <div class="col col-60 text-right-x ">
         <button class="button" ng-click="editPlace()" ng-if="!isEditingPlace">
           <i class="icon ion-location"></i> {{place ? place.name : '選擇位置'}}
@@ -24,13 +23,8 @@
           <input id="pac-input" data-tap-disabled="true" ng-change="disableTap()" type="text" placeholder="Search" ng-model="placeKeyword"
             google-place-auto-complete>
         </label>
-
       </div>
     </div>
-
-
-
-
     <div class="row padding">
       <ion-slides options="photoSlideOptions" slider="data.slider" style="height: 20rem;">
         <ion-slide-page ng-repeat="slide in photoSlides track by $index">
@@ -47,21 +41,11 @@
           </div>
         </ion-slide-page>
       </ion-slides>
-
-
-
     </div>
-    <!-- <div class="row padding">
-      <div class="col">
-        <textarea msd-elastic ng-model="content" placeholder="請新增說明文字"></textarea>
-      </div>
-    </div> -->
     <div class="list card">
-
       <div class="item item-icon-left" ng-repeat="item in items track by $index">
         <a class="button button-icon icon" ng-class="{'ion-plus-circled': !canDeleteItem($index), 'ion-minus-circled': canDeleteItem($index)}"
           ng-disabled="!canDeleteItem($index)" ng-click="deleteItem($index)"></a>
-
         </a>
         <div class="row">
           <div class="col col-80">
@@ -71,11 +55,7 @@
             <input type="number" placeholder="價格" ng-change="onItemChanged($index)" ng-model="item.price">
           </div>
         </div>
-
       </div>
-
-
-
     </div>
     <div class="row">
       <div class="col">

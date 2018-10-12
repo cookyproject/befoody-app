@@ -1,15 +1,12 @@
 app.factory('mediaService', ['$window', '$http', '$q', '$rootScope', '$cordovaFile', 'Guid', function ($window, $http, $q, $rootScope, $cordovaFile, Guid) {
 
   var mediaService = {};
-
+  // 以 Firbase Cloud Storage 檔名獲取完整url
   mediaService.getUrl = function(key){
     return 'https://firebasestorage.googleapis.com/v0/b/befoody-4e0a3.appspot.com/o/'+key+'?alt=media';
   };
 
-  mediaService.postVideo = function (medium) {
-    return $http.post(AppSettings.baseApiUrl + 'media/video', medium);
-  };
-
+  // 啟動相機並拍照上傳 Firebase Cloude Storage
   mediaService.postCameraImage = function (options) {
     return $q(function (resolve, reject) {
 
@@ -40,6 +37,8 @@ app.factory('mediaService', ['$window', '$http', '$q', '$rootScope', '$cordovaFi
       }, options);
     });
   };
+
+   // 啟動相簿選擇照片並上傳 Firebase Cloude Storage
   mediaService.postPickedImages = function (options) {
     return $q(function (resolve, reject) {
 

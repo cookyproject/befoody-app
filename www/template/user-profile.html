@@ -10,7 +10,6 @@
       <div class="col text-center-x" style="padding-top: 40px;">
         <img class="circle-lg" ng-src="{{me.user.avatar}}">
       </div>
-
     </div>
     <div class="row">
       <div class="col text-center-x">
@@ -18,9 +17,7 @@
         <p>{{me.user.description}}</p>
       </div>
     </div>
-
     <div class="row padding">
-
       <div class="col text-center-x">
         <h5>Followers</h5>
         <p>{{followerCount}}</p>
@@ -29,18 +26,11 @@
         <h5>Following</h5>
         <p>{{followingCount}}</p>
       </div>
-
     </div>
-
     <div class="row">
       <div class="col padding">
-       
-          <div collection-repeat="photo in photos" class="photo-thumb" item-height="100" item-width="100" back-img="{{photo.url}}">
-        
+        <div collection-repeat="photo in photos" class="photo-thumb" item-height="100" item-width="100" back-img="{{photo.url}}">
+        </div>
       </div>
-    </div>
-
-   
-
   </ion-content>
 </ion-view>

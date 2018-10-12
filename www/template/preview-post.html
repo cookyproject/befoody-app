@@ -16,18 +16,12 @@
           <h4>{{me.user.name}}</h4>
         </div>
       </div>
-
-
       <div class="col col-60 text-right-x">
         <button class="button button-clear button-positive">
           <i class="icon ion-location"></i> {{post.placeName}}
         </button>
       </div>
     </div>
-
-
-
-
     <div class="row padding" style="height: 15rem;">
       <ion-slides options="photoSlideOptions" slider="data.photoSlideModalSlider">
         <ion-slide-page ng-repeat="photo in post.photos | filter : {url: '!!'} track by $index ">

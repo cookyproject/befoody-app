@@ -1,17 +1,16 @@
 app.controller('RegisterCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory) {
-
-
   $scope.user = {
     email: '',
     password: '',
     confirmPassword: '',
   };
 
+  // 用戶按下返回取消註冊
   $scope.goBack = function () {
     $ionicHistory.goBack();
   };
 
-
+  // 用戶確認送出註冊表單
   $scope.submit = function () {
 
     if (!$scope.user.email) {
@@ -36,27 +35,25 @@ app.controller('RegisterCtrl', function ($scope, $rootScope, $state, $http, $ion
       return;
     }
 
-
-
+    // 透過 firebase auth API 註冊新帳號
     firebase.auth().createUserWithEmailAndPassword($scope.user.email, $scope.user.password).then(function (firebaseUser) {
       console.log(firebaseUser);
+      // 註冊成功
+      // 前往首次填寫個人資料畫面
       $state.go('create-user', {
         userId: firebaseUser.uid,
         avatar: null
       });
 
     }).catch(function (error) {
+      // 註冊失敗
       console.error(error);
-      if(error.code == 'auth/email-already-in-use'){
+      if (error.code == 'auth/email-already-in-use') {
         $ionicPopup.alert({
-            title: '無法註冊',
-            template: '此 Email 已經被註冊過'
-          });
+          title: '無法註冊',
+          template: '此 Email 已經被註冊過'
+        });
       }
     });
-
-
-
   };
-
 });

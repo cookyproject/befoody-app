@@ -23,23 +23,22 @@
               <h4>{{user.name}}</h4>
             </div>
           </div>
-
-
           <div class="col col-60 text-right-x">
-            <button class="button" ng-class="{'button-positive': !user.isFollowing, 'button-stable': user.isFollowing}" ng-click="addFollower(user)">
-              <i class="icon" ng-class="user.isFollowing ? 'ion-ios7-checkmark' : 'ion-plus-round'" ></i> {{user.isFollowing ? '已追蹤' : '追蹤'}}
+            <button class="button" ng-class="{'button-positive': !user.isFollowing, 'button-stable': user.isFollowing}"
+              ng-click="addFollower(user)">
+              <i class="icon" ng-class="user.isFollowing ? 'ion-ios7-checkmark' : 'ion-plus-round'"></i>
+              {{user.isFollowing ? '已追蹤' : '追蹤'}}
             </button>
           </div>
         </div>
         <div class="row padding" style="height: 15rem;">
-          <div class="col" back-img="{{user.lastestPost ? user.latestPost.photos[0].url : 'img/photo-placeholder.jpg'}}"  style="width:100%;height: 100%;background-size: contain;background-repeat: no-repeat;background-position: center; background-color: black;">
+          <div class="col" back-img="{{user.lastestPost ? user.latestPost.photos[0].url : 'img/photo-placeholder.jpg'}}"
+            style="width:100%;height: 100%;background-size: contain;background-repeat: no-repeat;background-position: center; background-color: black;">
             <div class="row" style="height:100%">
               <div class="col col-bottom" style="background-color: rgba(0, 0, 0, 0.3); color: white;" ng-if="user.description">
                 {{user.description}}
               </div>
             </div>
-
-
           </div>
         </div>
       </ion-item>

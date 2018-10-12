@@ -5,14 +5,15 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
     password: ''
   };
 
-
+  // FB 登入
   $scope.loginFacebook = function () {
 
-    // login with Facebook
+    // 先偵測FB SDK 是否已經就緒
     if (window.CordovaFacebook) {
       CordovaFacebook.login({
         permissions: ['email'],
         onSuccess: function (result) {
+          // 登入成功
           if (result.declined.length > 0) {
             console.log("The User declined something!");
           }
@@ -23,6 +24,7 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
           firebase.auth().signInWithCredential(firebase.auth.FacebookAuthProvider.credential(result.accessToken)).then(function (firebaseUser) {
             console.log("Signed in as:", firebaseUser);
             $ionicLoading.hide();
+            // 交由 navigateByFirebaseUser 函數決定下一步驟
             $scope.navigateByFirebaseUser(firebaseUser);
           }).catch(function (error) {
             console.log("Authentication failed:", error);
@@ -44,26 +46,15 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
           }
         }
       });
-    } else {
-      // fallback
-
-      firebase.auth().signInWithPopup("facebook").then(function (firebaseUser) {
-        console.log("Signed in as:", firebaseUser);
-        $scope.navigateByFirebaseUser(firebaseUser);
-      }).catch(function (error) {
-        console.log("Authentication failed:", error);
-      });
     }
-
-
-
   };
 
+  // Google 登入
   $scope.loginGoogle = function () {
     window.plugins.googleplus.login({
-        'scopes': '', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
-        'webClientId': '520776530433-jfi3u0hnhnbllfucjoj3q7murklmivup.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
-        'offline': true, // optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
+        'scopes': '', 
+        'webClientId': '520776530433-jfi3u0hnhnbllfucjoj3q7murklmivup.apps.googleusercontent.com',
+        'offline': true, 
       },
       function (obj) {
         console.log(obj);
@@ -71,8 +62,10 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
           template: '請稍候...'
         });
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(obj.idToken)).then(function (firebaseUser) {
+          // 登入成功
           console.log("Signed in as:", firebaseUser);
           $ionicLoading.hide();
+          // 交由 navigateByFirebaseUser 函數決定下一步驟
           $scope.navigateByFirebaseUser(firebaseUser);
 
         }).catch(function (error) {
@@ -92,16 +85,22 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
     );
   };
 
+
   $scope.navigateByFirebaseUser = function (firebaseUser) {
     $ionicLoading.show({
       template: '請稍候...'
     });
+    // 查詢 DB 是否有此用戶基本資料
     firebase.database().ref('/users/' + firebaseUser.uid).once('value').then(function (snapshot) {
       if (snapshot.val()) {
-        // already has profile
+        // 用戶之前已經有基本資料
         var profile = snapshot.val();
+
+        // 嘗試更新用戶最新頭貼 (用戶可能在FB,Google 上更新了自己頭貼，因此需要同步一次)
         profile.avatar = firebaseUser.photoURL;
+        // 將新頭貼同步回DB
         firebase.database().ref('users/' + firebaseUser.uid).set(profile).then(function (result) {
+          // 更新成功後前往主畫面: 文章列表
           $ionicLoading.hide();
           $state.go('main-tabs.post-list');
         }, function (err) {
@@ -109,7 +108,8 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
         });
 
       } else {
-        // no profile
+        // 用戶之前沒有填過基本資料，
+        // 前往首次基本資料填寫頁面
         $ionicLoading.hide();
         $state.go('create-user', {
           userId: firebaseUser.uid,
@@ -119,6 +119,8 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
 
     });
   }
+
+  // 前往註冊頁面
   $scope.register = function () {
     $state.go('register');
   };
@@ -149,6 +151,7 @@ app.controller('LoginCtrl', function ($scope, $rootScope, $state, $http, $ionicP
       }
     });
   };
+  
   $scope.init = function () {
 
     if (currentAuth) {
