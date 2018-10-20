@@ -162,7 +162,8 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
       .state('main-tabs.place-post-list', {
         url: '/place-post-list',
         params: {
-          place: null
+          place: null,
+          placeId: null,
         },
         views: {
           'tab-place-list': {
@@ -187,9 +188,9 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
       })
       .state('main-tabs.preview-post', {
         url: '/preview-post',
-        params: {
-          post: null
-        },
+        // params: {
+        //   post: null
+        // },
         views: {
           'tab-create-post': {
             templateUrl: 'template/preview-post.html',

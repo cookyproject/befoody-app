@@ -44,7 +44,7 @@ BeFoody App
   $ npm install
   $ bower install
 
-  # 啟動即時預覽
+  # 啟動
   $ ionic cordova run android
   
   # 如果要啟用liverelead 模式(須保持連接)

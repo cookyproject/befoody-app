@@ -14,8 +14,8 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
   $scope.loadedPostKeys = {};
 
   // 處理貼文照片被按下後的事件
-  $scope.openPhotoSlideModal = function (idx) {
-    $scope.post = $scope.posts[idx];
+  $scope.openPhotoSlideModal = function (post) {
+    $scope.post = post;
     // 彈出照片瀏覽視窗
     $scope.photoSlideModal.show();
     $scope.modalSlider.slideTo(0);
@@ -121,6 +121,14 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
     $state.go('search-user');
   };
 
+  // 處理使用者按下餐庭搜尋結果事件
+  $scope.clickPlace = function (placeId) {
+    // 前往該餐廳的貼文列表
+    $state.go('main-tabs.place-post-list', {
+      placeId: placeId
+    });
+  };
+
   // 初始化文章列表畫面
   $scope.init = function () {
     // 初始化照片瀏覽彈出視窗
@@ -134,7 +142,7 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
 
     // 從DB查詢用戶已經追蹤的會員
     firebase.database().ref('users/' + me.auth.uid + '/following').once('value').then(function (allFollowingSnap) {
-      
+
       // 把所有追蹤會員的userID 放進 followingKeys 陣列
       var followingKeys = [];
       allFollowingSnap.forEach(function (followingSanp) {

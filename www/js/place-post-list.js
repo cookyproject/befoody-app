@@ -20,8 +20,8 @@ app.controller('PlacePostListCtrl', function ($scope, $rootScope, $state, $state
   };
 
   // 處理貼文照片被按下後的事件
-  $scope.openPhotoSlideModal = function (idx) {
-    $scope.post = $scope.posts[idx];
+  $scope.openPhotoSlideModal = function (post) {
+    $scope.post = post;
     // 彈出照片瀏覽視窗
     $scope.photoSlideModal.show();
     $scope.modalSlider.slideTo(0);
@@ -99,8 +99,16 @@ app.controller('PlacePostListCtrl', function ($scope, $rootScope, $state, $state
   $scope.$on("$ionicView.enter", function (scopes, states) {
     if (states.stateName == "main-tabs.place-post-list") {
       // 每次進到本畫面，都強制重新整理貼文列表
-      $scope.place = $stateParams.place;
-      $scope.reloadPosts();
+      if ($stateParams.place) {
+        $scope.place = $stateParams.place;
+        console.log($scope.place);
+        $scope.reloadPosts();
+      }
+      else {
+        var placeId = $stateParams.placeId;
+        
+      }
+
     }
   });
 

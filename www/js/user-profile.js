@@ -4,11 +4,19 @@ app.controller('UserProfileCtrl', function ($scope, $rootScope, $state, $http, $
   $scope.followerCount = 0;
   $scope.followingCount = 0;
   $scope.photos = [];
-  
+
   // 處理按下登出按鈕事件
   $scope.logout = function () {
     firebase.auth().signOut();
   };
+
+  $scope.$on("$ionicView.enter", function (scopes, states) {
+    if (states.stateName == "main-tabs.user-profile") {
+      var bodyWidth = $('body').width();
+      console.log('width', bodyWidth)
+      $('#photoCollectionContainer').css('padding-left',((bodyWidth-310)/2)+'px');
+    }
+  });
 
   // 初始化個人資料頁面
   $scope.init = function () {
@@ -30,7 +38,7 @@ app.controller('UserProfileCtrl', function ($scope, $rootScope, $state, $http, $
       });
       $scope.followerCount = count;
     });
-    
+
     // 從 DB 查詢自己的貼文
     $scope.photos = [];
     firebase.database().ref("posts").orderByChild('authorUid').equalTo(me.auth.uid).once("value").then(function (allPostSnap) {
@@ -47,6 +55,9 @@ app.controller('UserProfileCtrl', function ($scope, $rootScope, $state, $http, $
       });
 
     });
+
+
+
   };
   $scope.init();
 

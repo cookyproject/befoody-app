@@ -178,11 +178,9 @@ app.controller('CreatePostCtrl', function ($scope, $rootScope, $state, $http, $i
       createdTime: firebase.database.ServerValue.TIMESTAMP,
     };
     console.log(JSON.stringify(post));
-
+    window.previewingPost = post;
     // 前往預覽貼文畫面
-    $state.go('main-tabs.preview-post', {
-      post: post
-    });
+    $state.go('main-tabs.preview-post');
 
   }
 

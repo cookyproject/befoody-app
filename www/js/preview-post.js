@@ -1,6 +1,6 @@
 app.controller('PreviewPostCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory, me, Guid, $ionicModal, mediaService, $ionicLoading, $cordovaActionSheet, $stateParams) {
   $scope.me = me;
-  $scope.post = $stateParams.post;
+  $scope.post = window.previewingPost;
   $scope.photoSlideOptions = {
     loop: false,
     effect: 'slide',
@@ -28,7 +28,7 @@ app.controller('PreviewPostCtrl', function ($scope, $rootScope, $state, $http, $
 
     // 將貼文寫入 DB posts 節點下
     firebase.database().ref('posts').push(post).then(function (result) {
-      
+
       // 寫入完成
       // 返回貼文列表
       $ionicHistory.backView().stateParams.submitted = true;
@@ -61,11 +61,15 @@ app.controller('PreviewPostCtrl', function ($scope, $rootScope, $state, $http, $
     $scope.modalSlider = data.photoSlideModalSlider;
 
   });
-
+  $scope.$on("$ionicView.enter", function (scopes, states) {
+    if (states.stateName == "main-tabs.preview-post") {
+      $scope.post = window.previewingPost;
+    }
+  });
   $scope.init = function () {
     $ionicModal.fromTemplateUrl('template/photo-slide-modal.html', {
       scope: $scope,
-      animation: 'slide-in-up'Ｆ
+      animation: 'slide-in-up'
     }).then(function (modal) {
       $scope.photoSlideModal = modal;
     });

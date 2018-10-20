@@ -28,9 +28,20 @@
       </div>
     </div>
     <div class="row">
-      <div class="col padding">
-        <div collection-repeat="photo in photos" class="photo-thumb" item-height="100" item-width="100" back-img="{{photo.url}}">
+      <div class="col" id="photoCollectionContainer">
+        <!-- <div id="photoCollectionDiv" collection-repeat="photo in photos" class="photo-thumb" item-height="100" item-width="100" back-img="{{photo.url}}"> -->
+        <div class="row">
+          <div class="col" style="height: 100px;" back-img="https://idigifun.com/wp-content/uploads/2013/05/citycafe.png">
+
+          </div>
+          <div class="col" style="height: 100px;" back-img="https://idigifun.com/wp-content/uploads/2013/05/citycafe.png">
+
+          </div>
+          <div class="col" style="height: 100px;" back-img="https://idigifun.com/wp-content/uploads/2013/05/citycafe.png">
+
+          </div>
         </div>
+      </div>
       </div>
   </ion-content>
 </ion-view>
