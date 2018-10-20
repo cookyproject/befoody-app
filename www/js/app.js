@@ -234,6 +234,18 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
         resolve: {
           me: requireLogin
         }
+      })
+      .state('setting', {
+        url: '/setting',
+        views: {
+          'main-nav-view': {
+            templateUrl: 'template/setting.html',
+            controller: 'SettingCtrl'
+          }
+        },
+        resolve: {
+          me: requireLogin
+        }
       });
     $urlRouterProvider.otherwise('/login');
 

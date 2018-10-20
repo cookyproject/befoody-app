@@ -4,6 +4,7 @@ app.controller('UserProfileCtrl', function ($scope, $rootScope, $state, $http, $
   $scope.followerCount = 0;
   $scope.followingCount = 0;
   $scope.photos = [];
+  $scope.photoGroups = [];
 
   // 處理按下登出按鈕事件
   $scope.logout = function () {
@@ -41,6 +42,7 @@ app.controller('UserProfileCtrl', function ($scope, $rootScope, $state, $http, $
 
     // 從 DB 查詢自己的貼文
     $scope.photos = [];
+    $scope.photoGroups = [];
     firebase.database().ref("posts").orderByChild('authorUid').equalTo(me.auth.uid).once("value").then(function (allPostSnap) {
       $scope.$apply(function () {
         // 走訪自己的貼文，從中挑出照片網址，
@@ -52,6 +54,17 @@ app.controller('UserProfileCtrl', function ($scope, $rootScope, $state, $http, $
             $scope.photos.push(post.photos[0]);
           }
         });
+
+        $scope.photos.forEach(function (photo, index){
+            if(index % 3 == 0){
+              $scope.photoGroups.push([]);
+            }
+            $scope.photoGroups[$scope.photoGroups.length-1].push(photo);
+        });
+        console.log($scope.photoGroups);
+
+        
+
       });
 
     });

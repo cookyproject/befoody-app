@@ -1,5 +1,8 @@
 <ion-view>
   <ion-header-bar align-title="center" class="bar bar-header bar-positive">
+    <div class="buttons">
+      <button class="button button-icon icon ion-gear-b" ng-click="gotoSetting()"></button>
+    </div>
     <h1 class="title white-text">My Profile</h1>
     <div class="buttons">
       <button class="button button-icon icon ion-log-out" ng-click="logout()"></button>
@@ -30,14 +33,14 @@
     <div class="row">
       <div class="col" id="photoCollectionContainer">
         <!-- <div id="photoCollectionDiv" collection-repeat="photo in photos" class="photo-thumb" item-height="100" item-width="100" back-img="{{photo.url}}"> -->
-        <div class="row">
-          <div class="col" style="height: 100px;" back-img="https://idigifun.com/wp-content/uploads/2013/05/citycafe.png">
+        <div class="row" ng-repeat="photoGroups in photoGroup">
+          <div class="col-33" ng-if="photoGroup[0]" style="height: 100px;" back-img="photoGroup[0].url">
 
           </div>
-          <div class="col" style="height: 100px;" back-img="https://idigifun.com/wp-content/uploads/2013/05/citycafe.png">
+          <div class="col-33" ng-if="photoGroup[1]" style="height: 100px;" back-img="photoGroup[1].url">
 
           </div>
-          <div class="col" style="height: 100px;" back-img="https://idigifun.com/wp-content/uploads/2013/05/citycafe.png">
+          <div class="col-33" ng-if="photoGroup[2]" style="height: 100px;" back-img="photoGroup[2].url">
 
           </div>
         </div>
