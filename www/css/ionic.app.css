@@ -14884,4 +14884,5 @@ textarea {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-color: black; }
+  background-color: black;
+  height: 100px; }

@@ -12,17 +12,9 @@ app.controller('UserProfileCtrl', function ($scope, $rootScope, $state, $http, $
   };
 
   // 處理按下設定按鈕事件
-  $scope.gotoConfig = function(){
-      $state.go('');
+  $scope.gotoSetting = function(){
+      $state.go('setting');
   }
-
-  $scope.$on("$ionicView.enter", function (scopes, states) {
-    if (states.stateName == "main-tabs.user-profile") {
-      var bodyWidth = $('body').width();
-      console.log('width', bodyWidth)
-      $('#photoCollectionContainer').css('padding-left',((bodyWidth-310)/2)+'px');
-    }
-  });
 
   // 初始化個人資料頁面
   $scope.init = function () {

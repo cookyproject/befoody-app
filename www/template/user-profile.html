@@ -32,15 +32,15 @@
     </div>
     <div class="row">
       <div class="col" id="photoCollectionContainer">
-        <!-- <div id="photoCollectionDiv" collection-repeat="photo in photos" class="photo-thumb" item-height="100" item-width="100" back-img="{{photo.url}}"> -->
-        <div class="row" ng-repeat="photoGroups in photoGroup">
-          <div class="col-33" ng-if="photoGroup[0]" style="height: 100px;" back-img="photoGroup[0].url">
+        
+        <div class="row" ng-repeat="photoGroup in photoGroups">
+          <div class="col-33 photo-thumb" ng-if="photoGroup.length > 0" back-img="{{photoGroup[0].url}}" >
 
           </div>
-          <div class="col-33" ng-if="photoGroup[1]" style="height: 100px;" back-img="photoGroup[1].url">
+          <div class="col-33 photo-thumb" ng-if="photoGroup.length > 1" back-img="{{photoGroup[1].url}}">
 
           </div>
-          <div class="col-33" ng-if="photoGroup[2]" style="height: 100px;" back-img="photoGroup[2].url">
+          <div class="col-33 photo-thumb" ng-if="photoGroup.length > 2" back-img="{{photoGroup[2].url}}">
 
           </div>
         </div>

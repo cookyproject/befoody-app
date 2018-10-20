@@ -1,32 +1,52 @@
 <ion-view>
-    <ion-header-bar align-title="center" class="bar bar-header bar-positive">
-        <div class="buttons">
-            <button class="button button-icon icon ion-ios-arrow-back" ng-click="goBackward()"></button>
-        </div>
-        <h1 class="title white-text">My Profile</h1>
+  <ion-header-bar align-title="center" class="bar bar-header bar-positive">
+    <div class="buttons">
+      <button class="button button-icon icon ion-ios-arrow-back" ng-click="goBackward()"></button>
+    </div>
+    <h1 class="title white-text">My Profile</h1>
 
-    </ion-header-bar>
-    <ion-content>
-        <div class="list">
-            <div class="item item-divider">
-                個人資料
-            </div>
-            <a class="item item-avatar" href="#">
-                <img ng-src="{{me.user.avatar}}">  
-                <h2>個人照片</h2>
-                
-            </a>
-            <label class="item item-input">
-                <span class="input-label">名稱</span>
-                <input type="text" ng-model="me.user.name">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">簡介</span>
-                <input type="text" ng-model="me.user.description">
-            </label>
-            <div class="item item-divider">
-                進階設定
-            </div>
-        </div>
-    </ion-content>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+      <div class="item item-divider">
+        個人資料
+      </div>
+      <a class="item item-avatar-right" href="#" style="min-height: 80px;">
+        <img ng-src="{{me.user.avatar}}" style="max-width: 50px; max-height: 50px;">
+        <h2>個人照片</h2>
+
+      </a>
+      <label class="item item-input">
+        <span class="input-label">名稱</span>
+        <input type="text" ng-model="me.user.name">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">簡介</span>
+        <input type="text" ng-model="me.user.description">
+      </label>
+    </div>
+    <ul class="list">
+      <div class="item item-divider">
+        通知設定
+      </div>
+      <li class="item item-toggle">
+        追蹤
+        <label class="toggle toggle-positive">
+          <input type="checkbox">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </li>
+      <li class="item item-toggle">
+        喜歡
+        <label class="toggle toggle-positive">
+          <input type="checkbox">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </li>
+    </ul>
+  </ion-content>
 </ion-view>
