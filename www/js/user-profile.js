@@ -11,6 +11,11 @@ app.controller('UserProfileCtrl', function ($scope, $rootScope, $state, $http, $
     firebase.auth().signOut();
   };
 
+  // 處理按下設定按鈕事件
+  $scope.gotoConfig = function(){
+      $state.go('');
+  }
+
   $scope.$on("$ionicView.enter", function (scopes, states) {
     if (states.stateName == "main-tabs.user-profile") {
       var bodyWidth = $('body').width();
