@@ -41,7 +41,7 @@ app.controller('RegisterCtrl', function ($scope, $rootScope, $state, $http, $ion
       // 註冊成功
       // 前往首次填寫個人資料畫面
       $state.go('create-user', {
-        userId: firebaseUser.uid,
+        userId: firebaseUser.user.uid,
         avatar: null
       });
 
