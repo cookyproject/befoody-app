@@ -1,4 +1,4 @@
-app.controller('AutoRecoListCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory) {
+app.controller('PlaceMapCtrl', function ($scope, $rootScope, $state, $http, $ionicPopup, $ionicHistory) {
 
   $scope.goBackward = function () {
     $ionicHistory.goBack();

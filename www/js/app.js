@@ -150,12 +150,33 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
           me: requireLogin
         }
       })
-      .state('main-tabs.place-list', {
+      .state('main-tabs.place-tabs', {
+        url: '/place-tabs',
+        abstract: true,
+        views: {
+          'tab-place-tabs': {
+            templateUrl: 'template/place-tabs.html'
+          }
+        },
+        resolve: {
+          me: requireLogin
+        }
+      })
+      .state('main-tabs.place-tabs.place-list', {
         url: '/place-list',
         views: {
           'tab-place-list': {
             templateUrl: 'template/place-list.html',
             controller: 'PlaceListCtrl'
+          }
+        }
+      })
+      .state('main-tabs.place-tabs.place-map', {
+        url: '/place-map',
+        views: {
+          'tab-place-map': {
+            templateUrl: 'template/place-map.html',
+            controller: 'PlaceMapCtrl'
           }
         }
       })
