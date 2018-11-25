@@ -14886,3 +14886,6 @@ textarea {
   background-position: center;
   background-color: black;
   height: 100px; }
+
+.map {
+  height: 100%; }
