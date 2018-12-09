@@ -30,17 +30,25 @@
         <div class="row padding" style="height: 15rem;">
           <div class="col" back-img="{{post.photos[0].url}}" ng-click="openPhotoSlideModal(post)" style="width:100%;height: 100%;background-size: contain;background-repeat: no-repeat;background-position: center; background-color: black;">
             <div class="row" style="height:100%">
-                <div class="col col-bottom" style="background-color: rgba(0, 0, 0, 0.3); color: white;" ng-if="post.photos[0].description">
-                    {{post.photos[0].description}}  
-                </div>
+              <div class="col col-bottom" style="background-color: rgba(0, 0, 0, 0.3); color: white;" ng-if="post.photos[0].description">
+                {{post.photos[0].description}}
+              </div>
             </div>
-            
-            
+
+
           </div>
         </div>
         <div class="row padding" ng-repeat="item in post.items track by $index">
           <div class="col">
             {{item.name}} ${{item.price}}
+          </div>
+        </div>
+        <div class="row padding">
+          <div class="col-50">
+            <div class="button-bar">
+              <button class="button icon-left ion-heart button-clear button-dark" ng-click="like(post)">{{post.likesCount}}</button>
+              <button class="button icon-left ion-chatbox-working button-clear button-dark" ng-click="gotoFeedback(post)">12</button>
+            </div>
           </div>
         </div>
       </ion-item>

@@ -69,6 +69,7 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
           // 走訪查詢貼文結果
           friendPostSnap.forEach(function (postSnap) {
             var post = postSnap.val();
+            post.id = postSnap.key;
             $scope.loadedPostKeys[postSnap.key] = true;
             $scope.lastLoadedPostCreatedTime = post.createdTime;
             $scope.lastLoadedPostKey = postSnap.key;
@@ -84,6 +85,16 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
             } else {
               post.createdSince = 'just now';
             }
+
+            // 計算 likes 
+            firebase.database().ref('likes/' + postSnap.key).once('value').then(function (allLikesSnap) {
+              var count = 0;
+              allLikesSnap.forEach(function (likeSnap) {
+                count++;
+              });
+              post.likesCount = count;
+            });
+
             console.log('init ', postSnap.key, post);
             added.push(post);
             // 進一步載入貼文作者得更詳細個資
@@ -127,6 +138,34 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
     $state.go('main-tabs.place-post-list', {
       placeId: placeId
     });
+  };
+
+  $scope.like = function (post) {
+
+
+    firebase.database().ref('likes/' + post.id + '/' + me.auth.uid).once('value').then(function (likeSnap) {
+      $scope.$apply(function () {
+        if (likeSnap.exists()) {
+          post.likesCount -= 1;
+          if(post.likesCount<0){
+            post.likesCount = 0;
+          }
+          likeSnap.ref.remove();
+        } else {
+          var obj = {
+            placeholder: true
+          }
+          post.likesCount += 1;
+          firebase.database().ref('likes/' + post.id + '/' + me.auth.uid).set(obj).then(function (result) {
+            console.log(result);
+          }, function (err) {
+            console.error(err);
+          });
+        }
+      });
+
+    });
+
   };
 
   // 初始化文章列表畫面
