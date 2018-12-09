@@ -39,6 +39,13 @@ app.controller('PlaceMapCtrl', function ($scope, $rootScope, $state, $http, $ion
               position: place.geometry.location,
               title: place.name
             });
+            var infowindow = new google.maps.InfoWindow({
+              content: '<a href="#">前往文章頁面</a>'
+            });
+            marker.addListener('click', function() {
+               infowindow.open(map, marker);
+            });
+
             place.marker = marker;
             $scope.markers.push(marker);
             marker.setMap($scope.map);
