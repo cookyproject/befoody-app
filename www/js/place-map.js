@@ -40,7 +40,7 @@ app.controller('PlaceMapCtrl', function ($scope, $rootScope, $state, $http, $ion
               title: place.name
             });
             var infowindow = new google.maps.InfoWindow({
-              content: '<a href="#">前往文章頁面</a>'
+              content: '<a href="#/place-post-list/'+place.place_id+'">前往文章頁面</a>'
             });
             marker.addListener('click', function() {
                infowindow.open($scope.map, marker);

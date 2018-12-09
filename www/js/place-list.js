@@ -70,8 +70,10 @@ app.controller('PlaceListCtrl', function ($scope, $rootScope, $state, $http, $io
   // 處理使用者按下餐庭搜尋結果事件
   $scope.clickPlace = function (place) {
     // 前往該餐廳的貼文列表
-    $state.go('main-tabs.place-post-list', {
+    $state.go('place-post-list', {
       place: place
+    },{
+      reload: true
     });
   };
 });

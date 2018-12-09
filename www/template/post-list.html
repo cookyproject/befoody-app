@@ -38,11 +38,6 @@
 
           </div>
         </div>
-        <div class="row padding" ng-repeat="item in post.items track by $index">
-          <div class="col">
-            {{item.name}} ${{item.price}}
-          </div>
-        </div>
         <div class="row padding">
           <div class="col-50">
             <div class="button-bar">
@@ -51,6 +46,12 @@
             </div>
           </div>
         </div>
+        <div class="row padding" ng-repeat="item in post.items track by $index">
+          <div class="col">
+            {{item.name}} ${{item.price}}
+          </div>
+        </div>
+
       </ion-item>
     </ion-list>
     <!-- <ion-infinite-scroll ng-if="hasMorePosts" on-infinite="loadNextPage()" distance="5px"></ion-infinite-scroll> -->

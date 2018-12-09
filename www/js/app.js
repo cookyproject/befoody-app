@@ -150,16 +150,19 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
           me: requireLogin
         }
       })
-      .state('main-tabs.post', {
+      .state('post', {
         url: '/post',
         params:{
           postId: null
         },
         views: {
-          'tab-post-list': {
+          'main-nav-view': {
             templateUrl: 'template/post.html',
             controller: 'PostCtrl'
           }
+        },
+        resolve: {
+          me: requireLogin
         }
 
       })
@@ -193,19 +196,23 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
           }
         }
       })
-      .state('main-tabs.place-post-list', {
-        url: '/place-post-list',
+      .state('place-post-list', {
+        url: '/place-post-list/:placeId',
         params: {
           place: null,
-          placeId: null,
+          // placeId: null,
         },
         views: {
-          'tab-place-tabs': {
+          'main-nav-view': {
             templateUrl: 'template/place-post-list.html',
             controller: 'PlacePostListCtrl'
           }
+        },
+        resolve: {
+          me: requireLogin
         }
       })
+     
       .state('main-tabs.create-post', {
         url: '/create-post',
         params: {

@@ -51,6 +51,14 @@
             {{item.name}} ${{item.price}}
           </div>
         </div>
+        <div class="row padding">
+            <div class="col-50">
+              <div class="button-bar">
+                <button class="button icon-left ion-heart button-clear button-dark" ng-click="like(post)">{{post.likesCount}}</button>
+                <button class="button icon-left ion-chatbox-working button-clear button-dark" ng-click="gotoFeedback(post)">{{post.feedbacksCount}}</button>
+              </div>
+            </div>
+          </div>
       </ion-item>
     </ion-list>
     <!-- <ion-infinite-scroll ng-if="hasMorePosts" on-infinite="loadNextPage()" distance="5px"></ion-infinite-scroll> -->

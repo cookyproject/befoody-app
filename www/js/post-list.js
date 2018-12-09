@@ -141,14 +141,7 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
     $state.go('search-user');
   };
 
-  // 處理使用者按下餐庭搜尋結果事件
-  $scope.clickPlace = function (placeId) {
-    // 前往該餐廳的貼文列表
-    $state.go('main-tabs.place-post-list', {
-      placeId: placeId
-    });
-  };
-
+  
   $scope.like = function (post) {
 
 
@@ -178,15 +171,17 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
   };
 
   $scope.gotoFeedback = function (post) {
-    $state.go('main-tabs.post', {
+    $state.go('post', {
       postId: post.id
     });
   };
-
+  // 處理使用者按下餐庭搜尋結果事件
   $scope.gotoPlacePostList = function (placeId) {
     // 前往該餐廳的貼文列表
-    $state.go('main-tabs.place-post-list', {
+    $state.go('^.^.place-post-list', {
       placeId: placeId
+    },{
+      reload: true
     });
   }
 
