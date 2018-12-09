@@ -14896,3 +14896,10 @@ textarea {
 
 .scroll {
   min-width: 100%; }
+
+.place-card {
+  display: inline-block;
+  width: 320px;
+  height: 100%;
+  margin-left: 5px;
+  margin-right: 5px; }
