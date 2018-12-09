@@ -150,6 +150,19 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
           me: requireLogin
         }
       })
+      .state('main-tabs.post', {
+        url: '/post',
+        params:{
+          postId: null
+        },
+        views: {
+          'tab-post-list': {
+            templateUrl: 'template/post.html',
+            controller: 'PostCtrl'
+          }
+        }
+
+      })
       .state('main-tabs.place-tabs', {
         url: '/place-tabs',
         abstract: true,
@@ -187,12 +200,11 @@ var app = angular.module('starter', ['ionic', 'monospaced.elastic', 'ngGuid', 'n
           placeId: null,
         },
         views: {
-          'tab-place-list': {
+          'tab-place-tabs': {
             templateUrl: 'template/place-post-list.html',
             controller: 'PlacePostListCtrl'
           }
         }
-
       })
       .state('main-tabs.create-post', {
         url: '/create-post',

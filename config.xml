@@ -3,7 +3,7 @@
     <name>BeFoody</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="debbie.cc.chen@gmail.com" href="http://ionicframework.com/">Debbie Chen</author>
-    <content original-src="index.html" src="http://172.20.10.2:8100" />
+    <content original-src="index.html" src="http://192.168.100.5:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

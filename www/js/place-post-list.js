@@ -40,12 +40,12 @@ app.controller('PlacePostListCtrl', function ($scope, $rootScope, $state, $state
   });
 
   // 重新整理個別餐廳貼文列表
-  $scope.reloadPosts = function () {
+  $scope.reloadPosts = function (place) {
     $scope.posts = [];
     $scope.post = null;
     $scope.loadedPostKeys = {};
     $scope.hasMorePosts = false;
-    var placeId = $stateParams.place.place_id;
+    var placeId = $scope.place.place_id;
 
     // 從DB查詢跟此餐廳有關的貼文
     firebase.database().ref("posts").orderByChild('placeId').equalTo(placeId).once("value").then(function (placePostSnapshots) {
@@ -105,7 +105,20 @@ app.controller('PlacePostListCtrl', function ($scope, $rootScope, $state, $state
         $scope.reloadPosts();
       }
       else {
+        var service = new google.maps.places.PlacesService(document.createElement('div'));
         var placeId = $stateParams.placeId;
+        var request = {
+          placeId: placeId,
+          fields: ['address_component', 'adr_address', 'alt_id','formatted_address', 'geometry', 'icon', 'id', 'name', 'permanently_closed', 'photo', 'place_id', 'plus_code', 'scope', 'type', 'url', 'utc_offset', 'vicinity']
+        };
+        service.getDetails(request, function(place, status){
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            $scope.place = place;
+            $scope.reloadPosts();
+          }
+          
+        });
+        
         
       }
 
@@ -119,7 +132,7 @@ app.controller('PlacePostListCtrl', function ($scope, $rootScope, $state, $state
       animation: 'slide-in-up'
     }).then(function (modal) {
       $scope.photoSlideModal = modal;
-      $scope.reloadPosts();
+      
     });
 
   };

@@ -1,0 +1,26 @@
+<ion-view>
+  <ion-header-bar align-title="center" class="bar bar-header bar-positive">
+    <div class="buttons">
+      <button class="button button-icon icon ion-ios-arrow-back" ng-click="goBackward()"></button>
+    </div>
+    <h1 class="title white-text">留言</h1>
+
+  </ion-header-bar>
+  <ion-content class="has-header">
+    <div class="list card">
+
+      <div class="item item-avatar" ng-repeat="feedback in feedbacks | orderBy:'time'">
+        <img ng-src="{{feedback.avatar ? feedback.avatar : 'img/avatar.png'}}">
+        <p>{{feedback.message}}</p>
+      </div>
+
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="請輸入留言" ng-model="form.message">
+        </label>
+        <a class="button button-icon icon ion-android-send" ng-click="submit()"></a>
+      </div>
+
+    </div>
+  </ion-content>
+</ion-view>

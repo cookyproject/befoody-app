@@ -95,6 +95,15 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
               post.likesCount = count;
             });
 
+            // 計算 feedbacks
+            firebase.database().ref('feedbacks/' + postSnap.key).once('value').then(function (allFeedbacksSnap) {
+              var count = 0;
+              allFeedbacksSnap.forEach(function (feedbackSanp) {
+                count++;
+              });
+              post.feedbacksCount = count;
+            });
+
             console.log('init ', postSnap.key, post);
             added.push(post);
             // 進一步載入貼文作者得更詳細個資
@@ -147,7 +156,7 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
       $scope.$apply(function () {
         if (likeSnap.exists()) {
           post.likesCount -= 1;
-          if(post.likesCount<0){
+          if (post.likesCount < 0) {
             post.likesCount = 0;
           }
           likeSnap.ref.remove();
@@ -167,6 +176,19 @@ app.controller('PostListCtrl', function ($scope, $rootScope, $state, $http, $ion
     });
 
   };
+
+  $scope.gotoFeedback = function (post) {
+    $state.go('main-tabs.post', {
+      postId: post.id
+    });
+  };
+
+  $scope.gotoPlacePostList = function (placeId) {
+    // 前往該餐廳的貼文列表
+    $state.go('main-tabs.place-post-list', {
+      placeId: placeId
+    });
+  }
 
   // 初始化文章列表畫面
   $scope.init = function () {

@@ -22,7 +22,7 @@
 
 
           <div class="col col-70 text-right-x">
-            <button class="button button-clear button-positive">
+            <button class="button button-clear button-positive" ng-click="gotoPlacePostList(post.placeId)">
               <i class="icon ion-location"></i> <span style="text-overflow:ellipsis;font-size: 12px;">{{post.placeName}}</span>
             </button>
           </div>
@@ -47,7 +47,7 @@
           <div class="col-50">
             <div class="button-bar">
               <button class="button icon-left ion-heart button-clear button-dark" ng-click="like(post)">{{post.likesCount}}</button>
-              <button class="button icon-left ion-chatbox-working button-clear button-dark" ng-click="gotoFeedback(post)">12</button>
+              <button class="button icon-left ion-chatbox-working button-clear button-dark" ng-click="gotoFeedback(post)">{{post.feedbacksCount}}</button>
             </div>
           </div>
         </div>
