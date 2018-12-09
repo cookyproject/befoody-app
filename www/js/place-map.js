@@ -43,10 +43,11 @@ app.controller('PlaceMapCtrl', function ($scope, $rootScope, $state, $http, $ion
               content: '<a href="#">前往文章頁面</a>'
             });
             marker.addListener('click', function() {
-               infowindow.open(map, marker);
+               infowindow.open($scope.map, marker);
             });
 
             place.marker = marker;
+            place.infowindow = infowindow;
             $scope.markers.push(marker);
             marker.setMap($scope.map);
           });
@@ -84,6 +85,7 @@ app.controller('PlaceMapCtrl', function ($scope, $rootScope, $state, $http, $ion
   $scope.panTo = function(place){
       $scope.map.panTo(place.geometry.location);
       $scope.map.setZoom(18);
+      place.infowindow.open($scope.map, place.marker);
   };
   $scope.$on("$ionicView.enter", function (scopes, states) {
 
